@@ -6,6 +6,8 @@ import { Forecast } from '@/models/Forecast';
 import { Tender } from '@/models/Tender';
 import { INITIAL_PRODUCTS, INITIAL_ORDERS, INITIAL_FORECASTS, INITIAL_TENDERS } from '@/lib/initialData';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const db = await connectToDatabase();

@@ -3,6 +3,8 @@ import { connectToDatabase } from '@/lib/mongodb';
 import { Tender } from '@/models/Tender';
 import { INITIAL_TENDERS } from '@/lib/initialData';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const db = await connectToDatabase();

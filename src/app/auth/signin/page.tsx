@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { ArrowRight, ShieldCheck, CheckCircle2, Lock, Mail, Phone, Eye, EyeOff, AlertCircle, X } from 'lucide-react';
 
-export default function AgritechSignInPage() {
+function AgritechSignInContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
@@ -374,5 +374,19 @@ export default function AgritechSignInPage() {
         <p>© 2026 CropNex India. Direct Farm-to-Consumer Platform.</p>
       </div>
     </div>
+  );
+}
+
+export default function AgritechSignInPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#f8faf9] flex items-center justify-center text-xs font-bold text-gray-500">
+          Loading CropNex Sign In...
+        </div>
+      }
+    >
+      <AgritechSignInContent />
+    </Suspense>
   );
 }

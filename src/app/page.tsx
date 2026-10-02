@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -33,7 +33,7 @@ import { useCart } from '@/context/CartContext';
 import { useLocation } from '@/context/LocationContext';
 import { INITIAL_PRODUCTS, ProductItem } from '@/lib/initialData';
 
-export default function AgritechMarketplaceHomePage() {
+function AgritechMarketplaceHomeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { data: session } = useSession();
@@ -1498,5 +1498,19 @@ export default function AgritechMarketplaceHomePage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function AgritechMarketplaceHomePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#f8faf9] flex items-center justify-center text-xs font-bold text-gray-500">
+          Loading CropNex Marketplace...
+        </div>
+      }
+    >
+      <AgritechMarketplaceHomeContent />
+    </Suspense>
   );
 }

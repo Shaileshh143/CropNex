@@ -3,6 +3,8 @@ import { connectToDatabase } from '@/lib/mongodb';
 import { Product } from '@/models/Product';
 import { INITIAL_PRODUCTS } from '@/lib/initialData';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const search = searchParams.get('search')?.toLowerCase() || '';

@@ -3,6 +3,8 @@ import { connectToDatabase } from '@/lib/mongodb';
 import { Forecast } from '@/models/Forecast';
 import { INITIAL_FORECASTS } from '@/lib/initialData';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const db = await connectToDatabase();
