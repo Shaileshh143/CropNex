@@ -1,125 +1,63 @@
-# CropNex — Official Direct Farm-to-Market Agritech Platform
-### Smart India Hackathon 2026 — Problem Statement ID 26033
+# CropNex.in — Online Farm-to-Home & Wholesale Agricultural Marketplace
+### Fullstack E-Commerce Platform (Amazon-Style Architecture)
 
-> **Problem Statement**: *“Multiple intermediaries reduce farmers earnings and increase consumer prices.”*  
-> **Theme**: Agriculture, FoodTech & Rural Development  
-> **Category**: Software  
-> **Team**: Team CropNex
+> **Platform**: CropNex India — Direct Producer & Farm Fresh E-Commerce Store  
+> **Tech Stack**: Next.js 15 (React 19, TypeScript), Tailwind CSS, MongoDB (Mongoose), NextAuth.js (Google OAuth 2.0)
 
 ---
 
-## 🌾 What is CropNex?
+## 🌾 What is CropNex.in?
 
-**CropNex** is a next-generation direct farm-to-market agritech platform engineered to eliminate exploitative intermediary supply chains. By establishing a direct 3-tier linkage between verified producers and wholesale/retail buyers, CropNex increases farmer realizations by up to 40% while reducing procurement overhead for buyers by 25%.
+**CropNex.in** is an Amazon-style e-commerce marketplace connecting rural farm producers directly with household consumers and bulk buyers. Customers enjoy fresh produce at direct-from-farm pricing with fast delivery, while farmers sell directly with zero middleman commissions.
 
-CropNex delivers **Four Core Pillars**:
-1. **Direct Multi-Tier Marketplace**: Verified farm-gate produce listings with dynamic search, multi-district filtering, quality grading, and direct cart/checkout.
-2. **AI Price Forecasting Engine**: 30-day algorithmic Mandi spot-price trend projections powered by historical market arrivals and seasonal momentum analysis.
-3. **Smart Logistics & Route Optimization**: Interactive Leaflet-powered route clustering that groups multiple farm-gate collection hubs to reduce transit mileage by over 20%.
-4. **Multilingual Tender Aggregator**: Aggregated government agricultural procurement tenders (referencing `etenders.gov.in`) with multilingual translation support (English, Hindi, Marathi).
+### 🌟 Amazon-Style Core Features
+1. **Amazon Marketplace as Default Homepage (`/`)**:
+   - Hero banner carousel for farm produce deals and sales.
+   - 4-in-1 category quick-access cards (Fresh Vegetables, Daily Fruits, Grains & Dals, Certified Organic).
+   - "Today's Deals" lightning deals strip.
+   - Amazon product cards with `#1 Best Seller`, `Limited time deal`, star ratings, review counts, strikethrough M.R.P., discount percentages, and Prime Free Delivery badges.
+   - Amazon Yellow `Add to Cart` and `Buy Now` buttons.
+   - Quick-view product modal.
+2. **Amazon Navigation Bar**:
+   - Top dark navigation with CropNex logo, "Deliver to [City Pincode]" location modal, central search bar with category dropdown, language selector, "Hello, Sign In / Account & Lists", "Returns & Orders", and Cart counter.
+   - Sub-navbar category strip (Fresh Vegetables, Daily Fruits, Grains, Spices, Pulses, Organic Store, Today's Deals, Sell on CropNex).
+3. **Shopping Cart & Checkout Drawer**:
+   - Slide-out cart with subtotal calculation, free delivery progress, and direct checkout modal (Address, UPI / Amazon Pay / COD payment).
+4. **Returns & Orders (`/orders`)**:
+   - Amazon-style "Your Orders" dashboard with package tracking, invoice download, and re-order buttons.
+5. **CropNex Seller Central (`/seller`)**:
+   - Dashboard for farmers and suppliers to add products and fulfill dispatch orders.
+6. **Authentication & Security (`/auth/signin`)**:
+   - Sign in with Google (OAuth 2.0) + 1-Click Instant Demo Login.
 
 ---
 
-## ⚡ Zero-Build Technology Stack
+## 🚀 Quick Start Guide
 
-CropNex is built strictly with modern **pure web standards** without external bundlers or complex runtime dependencies:
-- **Markup**: Semantic HTML5 with accessible micro-data and modal architecture.
-- **Styling**: Modern CSS3 (CSS Custom Properties, Flexbox, CSS Grid, Glassmorphism, mobile-responsive breakpoints).
-- **Logic**: Modular Vanilla JavaScript (ES6+), componentized state management, custom pub/sub events.
-- **Visuals & Charts**:
-  - [Lucide Icons](https://lucide.dev/) (CDN)
-  - [Chart.js](https://www.chartjs.org/) (CDN) for price forecast and revenue analytics
-  - [Leaflet.js](https://leafletjs.com/) + OpenStreetMap for spatial route clustering
-  - [Open-Meteo API](https://open-meteo.com/) for real-time agricultural weather
-- **State & Persistence**: `localStorage` data repository with zero external database configuration required.
-
----
-
-## 🚀 How to Run Locally
-
-You do **not** need `npm`, `node`, `vite`, `webpack`, or Python backend servers to run CropNex.
-
-### Option 1: Direct File Open
-Simply double-click:
+### 1. Install Dependencies
 ```bash
-index.html
+npm install
 ```
-in any modern web browser (Google Chrome, Microsoft Edge, Mozilla Firefox, Safari).
 
-### Option 2: Local HTTP Server (Optional)
-If you prefer running via a local development server:
+### 2. Configure Environment Variables
+Copy `.env.example` to `.env.local`:
 ```bash
-# Using Python
-python -m http.server 8000
-
-# Using Node / npx
-npx serve .
+cp .env.example .env.local
 ```
-Then visit `http://localhost:8000`.
 
----
+Configure your MongoDB URI and Google OAuth credentials in `.env.local`:
+```env
+MONGODB_URI=mongodb://127.0.0.1:27017/cropnex
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=cropnex_secure_jwt_secret_token_production_2026
 
-## 🌐 Deploy to Cloud Hosting
+# Google Cloud Console OAuth Credentials
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+```
 
-CropNex is 100% static and can be deployed in seconds to:
-- **GitHub Pages**: Push this repository and enable Pages in repository settings.
-- **Netlify**: Drag and drop the `CropNex` directory onto [Netlify Drop](https://app.netlify.com/drop).
-- **Vercel**: Run `vercel deploy` or import the Git repository.
-- **Firebase Hosting**: Run `firebase deploy --only hosting`.
-
----
-
-## 🎯 10-Step Presentation Demo Flow for SIH Judges
-
-Use the **floating demo toolbar** docked at the bottom of the screen or follow this scripted presentation sequence:
-
-1. **Step 1: Homepage & Value Proposition** (`#landing`)
-   - Present the tagline: *“From Farm to Market, Without Unnecessary Middlemen.”*
-   - Show live agricultural weather widget with field harvesting advisories.
-2. **Step 2: Intermediary Supply Chain Comparison**
-   - Scroll down to the interactive diagram comparing the traditional 6-step intermediary chain (only 25–35% farmer share) against CropNex's direct 3-tier model (65–80% realization).
-3. **Step 3: Direct Marketplace** (`#marketplace`)
-   - Demonstrate category pills (Vegetables, Grains, Fruits, Spices), location filters (Nashik, Pune, Solapur), and organic toggles.
-4. **Step 4: Produce Inspection & Details**
-   - Click **"Details"** on Tomato Hybrid or Alphonso Mango.
-   - Show farm origin (*Patil Organic Farms*), harvest date, quality grade, and quantity selector.
-5. **Step 5: Cart & Checkout Simulation**
-   - Add produce to cart, open the slide-out drawer, click **"Proceed to Checkout"**, and place a demo order generating ID `CNX-2026-XXXX`.
-6. **Step 6: Role Switching to Farmer Dashboard** (`#farmer-dashboard`)
-   - Click **"Switch Role"** ➔ Select **Farmer**.
-   - Show the live incoming order under *Incoming Buyer Orders*.
-   - Advance status from **"Pending"** ➔ **"Accepted"** ➔ **"Dispatched"**.
-7. **Step 7: Real-Time Buyer Order Tracking** (`#buyer-dashboard`)
-   - Switch back to **Buyer** and click **"Track"** on the order to display the step-by-step visual dispatch timeline.
-8. **Step 8: AI Price Forecasting Engine** (`#forecast`)
-   - Select *Tomato* or *Turmeric* and observe the Chart.js line comparing historical spot rates with projected 30-day forecast curves and confidence percentages.
-9. **Step 9: Smart Logistics & Route Clustering** (`#logistics`)
-   - View the Nashik-to-Pune corridor map. Click **"Optimize Route"** to demonstrate waypoint clustering, reducing distance from 210 km to 164 km and cutting fuel consumption by 21.9%.
-10. **Step 10: Multilingual Inclusivity & Tender Aggregator** (`#tenders`)
-    - Switch language to **हिंदी** or **मराठी** via the top language selector. Observe instant UI translation across navigation, badges, and dashboard headers.
-    - Inspect government procurement tender listings with direct links to `etenders.gov.in`.
-
----
-
-## 🔄 Resetting Platform Data
-
-If you wish to restore original demo products, orders, messages, and chart metrics at any time:
-1. Navigate to **Admin Dashboard** or **Profile / Settings**.
-2. Click **"Reset Demo Data"**.
-3. Confirm the prompt — the application will automatically restore all clean sample datasets in `localStorage`.
-
----
-
-## 👥 User Personas
-
-| Role | Name | Organization / Village | Primary Capabilities |
-| :--- | :--- | :--- | :--- |
-| **Farmer** | Ramesh Patil | Patil Organic Farms, Nashik | Publish crops, manage orders, update dispatch state, view AI price forecasts |
-| **Buyer** | Ajay Traders | Gultekdi Market Yard, Pune | Discover produce, manage cart, place orders, track dispatches, chat |
-| **Admin** | Operations Lead | SIH Operations Central | Platform GTV analytics, listing moderation, audit logs, reset demo data |
-
----
-
-## ⚖️ Official Agritech Solution
-
-*CropNex connects farmers directly with wholesale and institutional buyers with real-time AI Mandi intelligence, multi-stop smart cold logistics, and official government tenders.*
+### 3. Run Development Server
+```bash
+npm run dev
+```
+Open **[http://localhost:3000](http://localhost:3000)** in your browser.
