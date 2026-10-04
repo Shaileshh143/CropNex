@@ -113,7 +113,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Deliver To Location Selector */}
+        {/* Deliver To Location Selector (Desktop) */}
         <button
           onClick={() => {
             setTempCity(buyerLocation.city);
@@ -121,16 +121,16 @@ export default function Navbar() {
             setTempPincode(buyerLocation.pincode);
             setLocationModalOpen(true);
           }}
-          className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg hover:bg-white/10 text-left shrink-0 transition"
+          className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-left shrink-0 transition"
           title="Click to change your delivery location"
         >
           <MapPin className="w-4 h-4 text-[#f59e0b] shrink-0" />
           <div className="text-[11px] leading-tight">
-            <span className="text-emerald-200 hidden sm:block font-normal">
+            <span className="text-emerald-200 block font-normal">
               Deliver to {buyerLocation.city} ({buyerLocation.state})
             </span>
             <span className="font-bold text-white block">
-              <span className="sm:hidden">{buyerLocation.city} </span>{buyerLocation.pincode} • <span className="underline decoration-dotted">Change</span>
+              {buyerLocation.pincode} • Change
             </span>
           </div>
         </button>
@@ -334,7 +334,7 @@ export default function Navbar() {
       </div>
 
       {/* 2. SUB-NAVBAR CATEGORY STRIP (MID FOREST GREEN) */}
-      <div className="bg-[#1b432c] text-white px-3 sm:px-6 py-2 flex items-center justify-between text-xs sm:text-[13px] font-medium overflow-x-auto whitespace-nowrap scrollbar-none border-t border-emerald-800/40">
+      <div className="bg-[#1b432c] text-white px-3 sm:px-6 py-2 flex items-center justify-between text-xs sm:text-[13px] font-medium overflow-x-auto whitespace-nowrap scrollbar-none border-t border-emerald-800/40 w-full max-w-full">
         <div className="flex items-center gap-2 sm:gap-4">
           <Link
             href="/"
@@ -387,18 +387,8 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Sell on CropNex Button & PWA Install Button */}
-        <div className="pl-4 flex items-center gap-2 shrink-0">
-          <button
-            type="button"
-            onClick={() => window.dispatchEvent(new Event('cropnex-install-pwa'))}
-            className="py-1 px-2.5 rounded-md bg-white/10 hover:bg-white/20 font-bold text-white flex items-center gap-1.5 text-xs transition"
-            title="Install CropNex Progressive Web App"
-          >
-            <Download className="w-3.5 h-3.5 text-[#f59e0b]" />
-            <span className="hidden sm:inline">Install App</span>
-          </button>
-
+        {/* Sell on CropNex Button */}
+        <div className="pl-4 shrink-0">
           <Link
             href="/seller"
             className="py-1 px-3 rounded-md bg-[#f59e0b] hover:bg-[#d97706] font-bold text-slate-900 flex items-center gap-1 text-xs shadow-sm transition"

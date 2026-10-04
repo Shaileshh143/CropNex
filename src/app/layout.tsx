@@ -4,7 +4,7 @@ import { Providers } from '@/components/Providers';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CartDrawer from '@/components/CartDrawer';
-import PWAInstallPrompt from '@/components/PWAInstallPrompt';
+import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 
 export const viewport: Viewport = {
   themeColor: '#0e2a1b',
@@ -47,22 +47,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="apple-touch-icon" href="/images/icon-192.png" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="theme-color" content="#0e2a1b" />
-      </head>
       <body
         suppressHydrationWarning
-        className="antialiased flex flex-col min-h-screen bg-[#f8faf9] text-gray-900 pb-16 sm:pb-0 overflow-x-hidden"
+        className="antialiased flex flex-col min-h-screen bg-[#f8faf9] text-gray-900 pb-16 sm:pb-0 overflow-x-hidden w-full max-w-full"
       >
         <Providers>
           <Navbar />
           <CartDrawer />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 w-full max-w-full overflow-x-hidden">{children}</main>
           <Footer />
-          <PWAInstallPrompt />
+          <ServiceWorkerRegister />
         </Providers>
       </body>
     </html>

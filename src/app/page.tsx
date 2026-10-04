@@ -247,26 +247,24 @@ function AgritechMarketplaceHomeContent() {
       )}
 
       {/* 1. BUYER LOCATION & TRANSIT NOTIFICATION BAR */}
-      <div className="bg-[#eef5f0] border-b border-emerald-200/80 px-4 sm:px-6 py-2.5">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-          <div className="flex items-center gap-2 text-emerald-950">
+      <div className="bg-[#eef5f0] border-b border-emerald-200/80 px-3 sm:px-6 py-2 text-xs overflow-hidden w-full max-w-full">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2">
+          <div className="flex items-center gap-1.5 text-emerald-950 flex-wrap">
             <Compass className="w-4 h-4 text-emerald-700 shrink-0" />
-            <span>
-              Your Current Location: <strong>{buyerLocation.city}, {buyerLocation.state} (PIN: {buyerLocation.pincode})</strong>
+            <span className="leading-tight">
+              Location: <strong>{buyerLocation.city}, {buyerLocation.state} ({buyerLocation.pincode})</strong>
             </span>
             <button
               onClick={() => setLocationModalOpen(true)}
-              className="text-[#d97706] hover:underline font-bold ml-1"
+              className="text-[#d97706] hover:underline font-bold"
             >
-              Change Location
+              • Change
             </button>
           </div>
 
-          <div className="flex items-center gap-3 text-[11px] text-gray-600">
-            <span className="flex items-center gap-1 font-semibold text-emerald-800">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" />
-              <span>Anti-Fraud Barcodes &amp; Certified Kisan IDs Active on All Batches</span>
-            </span>
+          <div className="flex items-center gap-1.5 text-[11px] text-emerald-800 font-semibold truncate">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+            <span className="truncate">Anti-Fraud Barcodes &amp; Verified Kisan IDs Active</span>
           </div>
         </div>
       </div>
@@ -468,7 +466,7 @@ function AgritechMarketplaceHomeContent() {
       </div>
 
       {/* 4. MAIN PRODUCT MARKETPLACE (SIDEBAR FILTERS + PRODUCTS GRID) */}
-      <div id="marketplace-products" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 scroll-mt-20">
+      <div id="marketplace-products" className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 scroll-mt-20 overflow-x-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* LEFT SIDEBAR FILTERS (DESKTOP ONLY) */}
           <aside className="hidden lg:block lg:col-span-3 bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-6 text-xs sticky top-28">
