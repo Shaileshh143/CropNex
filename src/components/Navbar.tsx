@@ -38,11 +38,6 @@ export default function Navbar() {
     requestCurrentLocation,
   } = useLocation();
 
-  // Hide Buyer Navbar completely on /seller or for logged-in farmers
-  if (pathname?.startsWith('/seller') || (session?.user as any)?.role === 'farmer') {
-    return null;
-  }
-
   const [searchCategory, setSearchCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
@@ -89,6 +84,76 @@ export default function Navbar() {
     });
     setLocationModalOpen(false);
   };
+
+  // Hide Buyer Top Navbar on /seller or for logged-in farmers (AFTER all hooks!)
+  const isSellerPage = pathname?.startsWith('/seller');
+  const isFarmerRole = (session?.user as any)?.role === 'farmer';
+
+  if (isFarmerRole) {
+    return null;
+  }
+
+  // On seller page for non-logged-in visitors, hide buyer top header but render mobile bottom app bar
+  if (isSellerPage) {
+    return (
+      <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0e2a1b]/95 backdrop-blur-md text-white border-t border-emerald-800/80 py-1.5 px-2 flex items-center justify-around shadow-2xl">
+        <Link
+          href="/"
+          className="flex flex-col items-center gap-0.5 text-[10px] font-bold py-1 px-2 rounded-xl text-emerald-100 hover:text-[#f59e0b] transition"
+        >
+          <Home className="w-5 h-5" />
+          <span>Home</span>
+        </Link>
+
+        <Link
+          href="/?category=Vegetables"
+          className="flex flex-col items-center gap-0.5 text-[10px] font-bold py-1 px-2 rounded-xl text-emerald-100 hover:text-[#f59e0b] transition"
+        >
+          <span className="text-base leading-none">🥬</span>
+          <span>Veggies</span>
+        </Link>
+
+        <Link
+          href="/?category=Fruits"
+          className="flex flex-col items-center gap-0.5 text-[10px] font-bold py-1 px-2 rounded-xl text-emerald-100 hover:text-[#f59e0b] transition"
+        >
+          <span className="text-base leading-none">🍎</span>
+          <span>Fruits</span>
+        </Link>
+
+        <Link
+          href="/seller"
+          className="flex flex-col items-center gap-0.5 text-[10px] font-bold py-1 px-2 rounded-xl text-[#f59e0b] bg-white/10 transition"
+        >
+          <Store className="w-5 h-5" />
+          <span>Sell</span>
+        </Link>
+
+        <Link
+          href="/orders"
+          className="flex flex-col items-center gap-0.5 text-[10px] font-bold py-1 px-2 rounded-xl text-emerald-100 hover:text-[#f59e0b] transition"
+        >
+          <Package className="w-5 h-5" />
+          <span>Orders</span>
+        </Link>
+
+        <button
+          onClick={() => setIsCartOpen(true)}
+          className="flex flex-col items-center gap-0.5 text-[10px] font-bold py-1 px-2 rounded-xl text-emerald-100 hover:text-[#f59e0b] transition relative"
+        >
+          <div className="relative">
+            <ShoppingCart className="w-5 h-5" />
+            {totalItems > 0 && (
+              <span className="absolute -top-1 -right-2 bg-[#f59e0b] text-slate-900 font-black text-[9px] w-4 h-4 rounded-full flex items-center justify-center shadow">
+                {totalItems}
+              </span>
+            )}
+          </div>
+          <span>Cart</span>
+        </button>
+      </nav>
+    );
+  }
 
   return (
     <header className="sticky top-0 z-40 shadow-md">

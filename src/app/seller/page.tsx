@@ -383,7 +383,17 @@ export default function DedicatedFarmerPortalPage() {
   // =========================================================================
   if (!verifiedKisanId) {
     return (
-      <div className="min-h-[85vh] bg-[#f8faf9] py-12 px-4 flex flex-col items-center justify-center text-gray-900">
+      <div className="min-h-[85vh] bg-[#f8faf9] py-8 sm:py-12 px-4 flex flex-col items-center justify-center text-gray-900 pb-24 sm:pb-12">
+        <div className="w-full max-w-md mb-4 flex items-center justify-start">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-emerald-50 text-emerald-800 font-bold text-xs border border-gray-200 shadow-sm transition"
+          >
+            <ChevronRight className="w-4 h-4 rotate-180" />
+            <span>← Back to Marketplace</span>
+          </Link>
+        </div>
+
         <div className="text-center max-w-lg space-y-2 mb-8 flex flex-col items-center">
           <img
             src="/images/cropnex_logo.png"
