@@ -22,6 +22,8 @@ import {
   CheckCircle2,
   Home,
   Download,
+  ShieldCheck,
+  AlertCircle,
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -35,6 +37,10 @@ export default function Navbar() {
     setBuyerLocation,
     locationModalOpen,
     setLocationModalOpen,
+    isLocationVerified,
+    isDetecting,
+    detectionStatus,
+    detectionError,
     requestCurrentLocation,
   } = useLocation();
 
@@ -47,7 +53,15 @@ export default function Navbar() {
   const [tempCity, setTempCity] = useState(buyerLocation.city);
   const [tempState, setTempState] = useState(buyerLocation.state);
   const [tempPincode, setTempPincode] = useState(buyerLocation.pincode);
-  const [gpsLoading, setGpsLoading] = useState(false);
+
+  // Sync modal form inputs whenever buyerLocation updates (e.g. from GPS auto-detect)
+  React.useEffect(() => {
+    if (buyerLocation) {
+      setTempCity(buyerLocation.city);
+      setTempState(buyerLocation.state);
+      setTempPincode(buyerLocation.pincode);
+    }
+  }, [buyerLocation]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,16 +85,19 @@ export default function Navbar() {
   ];
 
   const handleDetectGPS = async () => {
-    setGpsLoading(true);
     await requestCurrentLocation();
-    setGpsLoading(false);
   };
 
   const handleSaveLocation = () => {
+    if (!tempCity.trim() || !tempState.trim()) {
+      alert('Please enter or select a valid City and State');
+      return;
+    }
     setBuyerLocation({
-      city: tempCity || 'Mumbai',
-      state: tempState || 'Maharashtra',
-      pincode: tempPincode || '400001',
+      city: tempCity.trim(),
+      state: tempState.trim(),
+      pincode: tempPincode.trim() || '400001',
+      isAutoDetected: false,
     });
     setLocationModalOpen(false);
   };
@@ -398,6 +415,27 @@ export default function Navbar() {
         </form>
       </div>
 
+      {/* MOBILE LOCATION DISPLAY STRIP (PHONE ONLY) */}
+      <div className="sm:hidden bg-[#091f13] px-3 py-1.5 flex items-center justify-between text-xs text-emerald-200 border-t border-emerald-900/60 shadow-inner">
+        <button
+          onClick={() => {
+            setTempCity(buyerLocation.city);
+            setTempState(buyerLocation.state);
+            setTempPincode(buyerLocation.pincode);
+            setLocationModalOpen(true);
+          }}
+          className="flex items-center gap-1.5 text-left w-full hover:text-white transition"
+        >
+          <MapPin className="w-3.5 h-3.5 text-[#f59e0b] shrink-0" />
+          <span className="truncate text-[11px]">
+            Deliver to: <strong className="text-white font-bold">{buyerLocation.city}</strong> ({buyerLocation.pincode})
+          </span>
+          <span className="text-[#f59e0b] text-[10px] ml-auto shrink-0 font-bold underline pl-2">
+            Change
+          </span>
+        </button>
+      </div>
+
       {/* 2. SUB-NAVBAR CATEGORY STRIP (MID FOREST GREEN) */}
       <div className="bg-[#1b432c] text-white px-3 sm:px-6 py-2 flex items-center justify-between text-xs sm:text-[13px] font-medium overflow-x-auto whitespace-nowrap scrollbar-none border-t border-emerald-800/40 w-full max-w-full">
         <div className="flex items-center gap-2 sm:gap-4">
@@ -464,46 +502,92 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* LOCATION PERMISSION & PINCODE MODAL */}
+      {/* LOCATION PERMISSION & PINCODE MODAL (STRICTLY NON-BYPASSABLE ON FIRST VISIT) */}
       {locationModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden text-gray-900 p-6 sm:p-8 space-y-6 animate-in fade-in zoom-in-95 duration-150">
+        <div
+          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto"
+          onClick={(e) => {
+            // Prevent closing on backdrop click if location is not verified
+            e.stopPropagation();
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden text-gray-900 p-5 sm:p-8 space-y-5 animate-in fade-in zoom-in-95 duration-150 my-auto"
+          >
             <div className="flex items-start justify-between pb-3 border-b border-gray-100">
-              <div>
-                <div className="flex items-center gap-2 text-emerald-700 font-bold text-xs uppercase tracking-wider">
-                  <MapPin className="w-4 h-4" />
-                  <span>Buyer Delivery Location</span>
-                </div>
+              <div className="space-y-1">
+                {!isLocationVerified ? (
+                  <div className="flex items-center gap-1.5 text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full font-bold text-[11px] w-fit shadow-xs">
+                    <ShieldCheck className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                    <span>Mandatory Delivery Location</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 text-emerald-700 font-bold text-xs uppercase tracking-wider">
+                    <MapPin className="w-4 h-4" />
+                    <span>Buyer Delivery Location</span>
+                  </div>
+                )}
                 <h3 className="font-black text-xl text-gray-900 mt-1">
                   Where should we deliver your produce?
                 </h3>
-                <p className="text-xs text-gray-500 mt-0.5">
-                  Produce transit time and farm origin are calculated accurately based on your state and city.
+                <p className="text-xs text-gray-500">
+                  {!isLocationVerified
+                    ? 'Accurate location is required to calculate direct farm dispatch times, live APMC mandi pricing, and transit time. This step cannot be skipped.'
+                    : 'Produce transit time and farm origin are calculated accurately based on your state and city.'}
                 </p>
               </div>
-              <button
-                onClick={() => setLocationModalOpen(false)}
-                className="p-1 text-gray-400 hover:text-gray-600 rounded-lg"
-              >
-                <X className="w-5 h-5" />
-              </button>
+
+              {/* Close Button: ONLY rendered if user ALREADY has a verified location and is editing it */}
+              {isLocationVerified && (
+                <button
+                  onClick={() => setLocationModalOpen(false)}
+                  className="p-1.5 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 transition"
+                  title="Close"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
             </div>
+
+            {/* Auto GPS Detection Banner / Status */}
+            {isDetecting ? (
+              <div className="bg-emerald-50 border border-emerald-300 rounded-2xl p-4 text-center space-y-2 animate-pulse">
+                <div className="flex items-center justify-center gap-2.5 text-emerald-900 font-bold text-xs sm:text-sm">
+                  <Navigation className="w-5 h-5 text-emerald-600 animate-spin" />
+                  <span>{detectionStatus || 'Detecting your delivery location via GPS & Network...'}</span>
+                </div>
+                <p className="text-[11px] text-emerald-700">
+                  Please tap &ldquo;Allow&rdquo; if your device prompts for Location Permission.
+                </p>
+              </div>
+            ) : detectionError ? (
+              <div className="bg-amber-50 border border-amber-300 rounded-2xl p-3 text-amber-900 text-xs flex items-start gap-2.5">
+                <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                <div className="space-y-0.5">
+                  <span className="font-bold block">GPS Access Off / Blocked</span>
+                  <span className="text-[11px] text-amber-800 leading-snug">
+                    {detectionError}
+                  </span>
+                </div>
+              </div>
+            ) : null}
 
             {/* Auto GPS Detect Button */}
             <button
               onClick={handleDetectGPS}
-              disabled={gpsLoading}
-              className="w-full py-3 px-4 rounded-2xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-900 font-bold text-xs flex items-center justify-center gap-2.5 transition shadow-sm"
+              disabled={isDetecting}
+              className="w-full py-3.5 px-4 rounded-2xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-900 font-bold text-xs sm:text-sm flex items-center justify-center gap-2.5 transition shadow-sm active:scale-98 disabled:opacity-60"
             >
-              <Navigation className="w-4 h-4 text-emerald-600 animate-pulse" />
+              <Navigation className={`w-4 h-4 text-emerald-600 ${isDetecting ? 'animate-spin' : 'animate-pulse'}`} />
               <span>
-                {gpsLoading ? 'Detecting your location...' : 'Use Current Location (GPS Auto-Detect)'}
+                {isDetecting ? 'Detecting Your Location...' : 'Use Current Location (GPS Auto-Detect)'}
               </span>
             </button>
 
             <div className="relative flex items-center justify-center">
               <div className="border-t border-gray-200 w-full" />
-              <span className="bg-white px-2 text-[11px] text-gray-400 font-semibold uppercase">
+              <span className="bg-white px-2.5 text-[11px] text-gray-400 font-semibold uppercase whitespace-nowrap">
                 Or Select Your Region Manually
               </span>
               <div className="border-t border-gray-200 w-full" />
@@ -536,6 +620,11 @@ export default function Navbar() {
                     <option value="Gujarat">Gujarat</option>
                     <option value="Karnataka">Karnataka</option>
                     <option value="Rajasthan">Rajasthan</option>
+                    <option value="Bihar">Bihar</option>
+                    <option value="West Bengal">West Bengal</option>
+                    <option value="Telangana">Telangana</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                    <option value="Kerala">Kerala</option>
                   </select>
                 </div>
 
@@ -579,7 +668,7 @@ export default function Navbar() {
                       }}
                       className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition ${
                         tempCity === item.city
-                          ? 'bg-emerald-700 text-white'
+                          ? 'bg-emerald-700 text-white shadow-xs'
                           : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
                       }`}
                     >
@@ -590,20 +679,33 @@ export default function Navbar() {
               </div>
             </div>
 
-            <div className="pt-2 flex gap-3">
-              <button
-                onClick={() => setLocationModalOpen(false)}
-                className="flex-1 py-2.5 rounded-xl border border-gray-300 font-bold hover:bg-gray-50 text-xs"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSaveLocation}
-                className="flex-1 py-2.5 rounded-xl bg-[#f59e0b] hover:bg-[#d97706] text-white font-bold text-xs shadow-md transition"
-              >
-                Apply Location
-              </button>
-            </div>
+            {/* Bottom Actions: Strict No-Bypass when !isLocationVerified */}
+            {!isLocationVerified ? (
+              <div className="pt-2">
+                <button
+                  onClick={handleSaveLocation}
+                  className="w-full py-3.5 px-4 rounded-2xl bg-[#f59e0b] hover:bg-[#d97706] text-slate-950 font-black text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2"
+                >
+                  <CheckCircle2 className="w-4 h-4 text-slate-950" />
+                  <span>Confirm Delivery Location &amp; Continue</span>
+                </button>
+              </div>
+            ) : (
+              <div className="pt-2 flex gap-3">
+                <button
+                  onClick={() => setLocationModalOpen(false)}
+                  className="flex-1 py-2.5 rounded-xl border border-gray-300 font-bold hover:bg-gray-50 text-xs text-gray-700 transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSaveLocation}
+                  className="flex-1 py-2.5 rounded-xl bg-[#f59e0b] hover:bg-[#d97706] text-slate-950 font-bold text-xs shadow-md transition"
+                >
+                  Apply Location
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
