@@ -49,12 +49,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className="antialiased flex flex-col min-h-screen bg-[#f8faf9] text-gray-900 pb-16 sm:pb-0 overflow-x-hidden w-full max-w-full"
+        className="antialiased flex flex-col min-h-screen bg-[#f8faf9] text-gray-900 pb-16 sm:pb-0 overflow-x-clip w-full max-w-full"
       >
         <Providers>
           <Navbar />
           <CartDrawer />
-          <main className="flex-1 w-full max-w-full overflow-x-hidden">{children}</main>
+          <main className="flex-1 w-full max-w-full">{children}</main>
           <Footer />
           <ServiceWorkerRegister />
         </Providers>

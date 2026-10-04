@@ -466,10 +466,10 @@ function AgritechMarketplaceHomeContent() {
       </div>
 
       {/* 4. MAIN PRODUCT MARKETPLACE (SIDEBAR FILTERS + PRODUCTS GRID) */}
-      <div id="marketplace-products" className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 scroll-mt-20 overflow-x-hidden">
+      <div id="marketplace-products" className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 scroll-mt-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* LEFT SIDEBAR FILTERS (DESKTOP ONLY) */}
-          <aside className="hidden lg:block lg:col-span-3 bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-6 text-xs sticky top-28">
+          {/* LEFT SIDEBAR FILTERS (DESKTOP ONLY - STICKY SCROLL) */}
+          <aside className="hidden lg:block lg:col-span-3 bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-6 text-xs sticky top-24 self-start max-h-[calc(100vh-110px)] overflow-y-auto scrollbar-thin z-20">
             <div className="flex items-center justify-between pb-3 border-b border-gray-100">
               <h3 className="font-black text-sm text-gray-900 flex items-center gap-1.5">
                 <Filter className="w-4 h-4 text-emerald-700" />

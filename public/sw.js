@@ -1,5 +1,5 @@
-// CropNex Progressive Web App Service Worker v3.1
-const CACHE_NAME = 'cropnex-pwa-v3.1';
+// CropNex Progressive Web App Service Worker v3.2
+const CACHE_NAME = 'cropnex-pwa-v3.2';
 const OFFLINE_URL = '/offline.html';
 
 const PRECACHE_ASSETS = [
