@@ -1,9 +1,8 @@
-// CropNex Progressive Web App Service Worker
-const CACHE_NAME = 'cropnex-pwa-v2.1';
+// CropNex Progressive Web App Service Worker v3.0
+const CACHE_NAME = 'cropnex-pwa-v3.0';
 const OFFLINE_URL = '/offline.html';
 
 const PRECACHE_ASSETS = [
-  '/',
   '/offline.html',
   '/manifest.json',
   '/images/cropnex_logo.png',
@@ -11,7 +10,7 @@ const PRECACHE_ASSETS = [
   '/images/icon-512.png',
 ];
 
-// 1. Install Event: Cache essential assets
+// 1. Install Event: Cache essential offline assets only
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
@@ -23,13 +22,14 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// 2. Activate Event: Clean up outdated caches
+// 2. Activate Event: Instantly delete ALL old caches (v1, v2, v2.1)
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
+            console.log('[PWA SW] Deleting obsolete cache:', key);
             return caches.delete(key);
           }
         })
@@ -38,7 +38,14 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// 3. Fetch Event: Network-first strategy with offline fallback
+// 3. Message Event: allow immediate skipWaiting
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
+// 4. Fetch Event: Network-First for HTML navigation so phone always gets the latest deployed code
 self.addEventListener('fetch', (event) => {
   const { request } = event;
 
@@ -46,21 +53,11 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return;
   if (request.url.includes('/api/') || request.url.includes('/auth/')) return;
 
-  // Navigation requests (HTML pages)
+  // Navigation requests (HTML pages): ALWAYS try fresh network first!
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request)
-        .then((response) => {
-          // Clone and cache successful page responses
-          if (response && response.status === 200) {
-            const copy = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
-          }
-          return response;
-        })
         .catch(async () => {
-          const cachedResponse = await caches.match(request);
-          if (cachedResponse) return cachedResponse;
           const offlinePage = await caches.match(OFFLINE_URL);
           return offlinePage || new Response('Offline', { status: 503, statusText: 'Offline' });
         })
@@ -68,27 +65,19 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Static assets (images, icons, fonts)
-  if (
-    request.destination === 'image' ||
-    request.destination === 'font' ||
-    request.destination === 'style' ||
-    request.destination === 'script'
-  ) {
-    event.respondWith(
-      caches.match(request).then((cached) => {
-        if (cached) return cached;
-        return fetch(request)
-          .then((response) => {
-            if (response && response.status === 200) {
-              const copy = response.clone();
-              caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
-            }
-            return response;
-          })
-          .catch(() => cached || Response.error());
+  // Static assets (images, icons, styles, scripts): Network-first with cache fallback
+  event.respondWith(
+    fetch(request)
+      .then((response) => {
+        if (response && response.status === 200 && response.type === 'basic') {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+        }
+        return response;
       })
-    );
-    return;
-  }
+      .catch(async () => {
+        const cached = await caches.match(request);
+        return cached || Response.error();
+      })
+  );
 });
