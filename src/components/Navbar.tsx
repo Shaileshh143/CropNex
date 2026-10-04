@@ -21,6 +21,7 @@ import {
   Navigation,
   CheckCircle2,
   Home,
+  Download,
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -386,8 +387,18 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Sell on CropNex Button */}
-        <div className="pl-4">
+        {/* Sell on CropNex Button & PWA Install Button */}
+        <div className="pl-4 flex items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event('cropnex-install-pwa'))}
+            className="py-1 px-2.5 rounded-md bg-white/10 hover:bg-white/20 font-bold text-white flex items-center gap-1.5 text-xs transition"
+            title="Install CropNex Progressive Web App"
+          >
+            <Download className="w-3.5 h-3.5 text-[#f59e0b]" />
+            <span className="hidden sm:inline">Install App</span>
+          </button>
+
           <Link
             href="/seller"
             className="py-1 px-3 rounded-md bg-[#f59e0b] hover:bg-[#d97706] font-bold text-slate-900 flex items-center gap-1 text-xs shadow-sm transition"

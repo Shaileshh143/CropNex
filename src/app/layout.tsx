@@ -4,6 +4,7 @@ import { Providers } from '@/components/Providers';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CartDrawer from '@/components/CartDrawer';
+import PWAInstallPrompt from '@/components/PWAInstallPrompt';
 
 export const viewport: Viewport = {
   themeColor: '#0e2a1b',
@@ -18,15 +19,16 @@ export const metadata: Metadata = {
     'Online shopping at CropNex India for fresh vegetables, farm fruits, organic grains, spices and groceries. Fast delivery, direct farmer pricing, and best deals.',
   manifest: '/manifest.json',
   icons: {
-    icon: '/images/cropnex_logo.png',
-    shortcut: '/images/cropnex_logo.png',
-    apple: '/images/cropnex_logo.png',
+    icon: '/images/icon-192.png',
+    shortcut: '/images/icon-192.png',
+    apple: '/images/icon-192.png',
   },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
     title: 'CropNex',
   },
+  applicationName: 'CropNex',
   keywords: [
     'CropNex',
     'Direct Farm Produce',
@@ -34,6 +36,7 @@ export const metadata: Metadata = {
     'Organic Vegetables',
     'Farm to Home',
     'Certified Kisan ID',
+    'PWA',
   ],
 };
 
@@ -44,6 +47,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="apple-touch-icon" href="/images/icon-192.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="theme-color" content="#0e2a1b" />
+      </head>
       <body
         suppressHydrationWarning
         className="antialiased flex flex-col min-h-screen bg-[#f8faf9] text-gray-900 pb-16 sm:pb-0 overflow-x-hidden"
@@ -53,6 +62,7 @@ export default function RootLayout({
           <CartDrawer />
           <main className="flex-1">{children}</main>
           <Footer />
+          <PWAInstallPrompt />
         </Providers>
       </body>
     </html>

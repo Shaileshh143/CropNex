@@ -1,18 +1,67 @@
 {
-  "name": "CropNex - Direct Farm Marketplace",
+  "name": "CropNex - Fresh Farm Produce & Groceries",
   "short_name": "CropNex",
-  "description": "Direct Farm-to-Consumer & Wholesale Agritech Platform",
+  "description": "Buy farm fresh vegetables, fruits, grains and spices directly from verified Indian farmers with batch traceability.",
   "start_url": "/",
+  "id": "/",
+  "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "window-controls-overlay", "minimal-ui"],
   "background_color": "#0e2a1b",
   "theme_color": "#0e2a1b",
   "orientation": "portrait-primary",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "categories": ["shopping", "food", "lifestyle", "business"],
   "icons": [
     {
-      "src": "/images/cropnex_logo.png",
-      "sizes": "192x192 512x512",
+      "src": "/images/icon-192.png",
+      "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/icon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
-  ]
+  ],
+  "shortcuts": [
+    {
+      "name": "Fresh Vegetables",
+      "short_name": "Veggies",
+      "description": "Direct farm harvested vegetables",
+      "url": "/?category=Vegetables",
+      "icons": [{ "src": "/images/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Daily Fruits",
+      "short_name": "Fruits",
+      "description": "Ratnagiri mangoes, apples and orchard fruits",
+      "url": "/?category=Fruits",
+      "icons": [{ "src": "/images/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Seller Central",
+      "short_name": "Farmer",
+      "description": "Sell your crops directly on CropNex",
+      "url": "/seller",
+      "icons": [{ "src": "/images/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Track Orders",
+      "short_name": "Orders",
+      "description": "View active transit shipments",
+      "url": "/orders",
+      "icons": [{ "src": "/images/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "prefer_related_applications": false
 }
