@@ -55,6 +55,7 @@ function AgritechMarketplaceHomeContent() {
   const [minRating, setMinRating] = useState<number>(0);
   const [sortBy, setSortBy] = useState<string>('featured');
   const [nearestOnly, setNearestOnly] = useState<boolean>(false);
+  const [mobileFilterOpen, setMobileFilterOpen] = useState<boolean>(false);
 
   // Quick View Product Modal
   const [quickProduct, setQuickProduct] = useState<ProductItem | null>(null);
@@ -271,28 +272,28 @@ function AgritechMarketplaceHomeContent() {
       </div>
 
       {/* 2. HERO PROMO BANNER CAROUSEL */}
-      <div className="relative h-64 sm:h-80 md:h-96 w-full overflow-hidden bg-[#0e2a1b]">
+      <div className="relative h-60 sm:h-80 md:h-96 w-full overflow-hidden bg-[#0e2a1b]">
         <div
           className={`absolute inset-0 bg-gradient-to-r ${banners[currentSlide].bg} transition-all duration-700 flex items-center`}
         >
-          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 w-full grid grid-cols-1 md:grid-cols-12 items-center gap-6">
-            <div className="md:col-span-8 text-white space-y-3 sm:space-y-4">
-              <span className="inline-block px-3 py-1 rounded-full bg-emerald-900/80 text-[10px] font-black tracking-widest uppercase border border-emerald-500/30 text-emerald-300">
+          <div className="max-w-7xl mx-auto px-4 sm:px-10 lg:px-12 w-full grid grid-cols-1 md:grid-cols-12 items-center gap-4 sm:gap-6">
+            <div className="md:col-span-8 text-white space-y-2 sm:space-y-4">
+              <span className="inline-block px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-emerald-900/80 text-[9px] sm:text-[10px] font-black tracking-widest uppercase border border-emerald-500/30 text-emerald-300">
                 {banners[currentSlide].tag}
               </span>
-              <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
+              <h1 className="text-xl sm:text-3xl md:text-5xl font-black tracking-tight leading-tight">
                 {banners[currentSlide].title}
               </h1>
-              <p className="text-xs sm:text-sm text-emerald-100 max-w-xl leading-relaxed">
+              <p className="text-[11px] sm:text-sm text-emerald-100 max-w-xl leading-relaxed line-clamp-2 sm:line-clamp-none">
                 {banners[currentSlide].subtitle}
               </p>
-              <div className="pt-2">
+              <div className="pt-1 sm:pt-2">
                 <button
                   onClick={() => {
                     setSelectedCategory(banners[currentSlide].category);
                     showToast(`Filtering for ${banners[currentSlide].category}`);
                   }}
-                  className="px-6 py-2.5 bg-[#f59e0b] hover:bg-[#d97706] text-white font-bold text-xs sm:text-sm rounded-full shadow-lg shadow-amber-900/30 transition transform hover:-translate-y-0.5"
+                  className="px-4 sm:px-6 py-2 sm:py-2.5 bg-[#f59e0b] hover:bg-[#d97706] text-white font-bold text-xs sm:text-sm rounded-full shadow-lg shadow-amber-900/30 transition transform hover:-translate-y-0.5"
                 >
                   {banners[currentSlide].btnText}
                 </button>
@@ -323,13 +324,13 @@ function AgritechMarketplaceHomeContent() {
         </div>
 
         {/* Carousel indicators */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+        <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2">
           {banners.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrentSlide(idx)}
-              className={`h-2 rounded-full transition-all ${
-                currentSlide === idx ? 'w-8 bg-[#f59e0b]' : 'w-2 bg-white/40'
+              className={`h-1.5 sm:h-2 rounded-full transition-all ${
+                currentSlide === idx ? 'w-6 sm:w-8 bg-[#f59e0b]' : 'w-1.5 sm:w-2 bg-white/40'
               }`}
             />
           ))}
@@ -337,95 +338,95 @@ function AgritechMarketplaceHomeContent() {
       </div>
 
       {/* 3. POPULAR QUICK-CATEGORY CARDS */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-14 sm:-mt-16 relative z-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 -mt-6 sm:-mt-16 relative z-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
           <div
             onClick={() => handleCategorySelect('Vegetables')}
-            className={`p-4 rounded-2xl shadow-md border cursor-pointer hover:shadow-xl transition group ${
+            className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl shadow-md border cursor-pointer hover:shadow-xl transition group ${
               selectedCategory.toLowerCase() === 'vegetables' && !organicOnly
                 ? 'bg-emerald-50 border-2 border-emerald-600 ring-2 ring-emerald-300'
                 : 'bg-white border-gray-200 hover:border-emerald-500'
             }`}
           >
             <div className="flex items-center justify-between">
-              <h3 className="font-bold text-sm text-gray-900 group-hover:text-emerald-700">
+              <h3 className="font-bold text-xs sm:text-sm text-gray-900 group-hover:text-emerald-700">
                 Fresh Vegetables
               </h3>
               {selectedCategory.toLowerCase() === 'vegetables' && !organicOnly && (
-                <span className="text-[10px] bg-emerald-700 text-white px-2 py-0.5 rounded-full font-bold">
+                <span className="text-[9px] sm:text-[10px] bg-emerald-700 text-white px-1.5 sm:px-2 py-0.5 rounded-full font-bold">
                   Active
                 </span>
               )}
             </div>
-            <div className="mt-2 h-28 rounded-xl overflow-hidden bg-gray-100">
+            <div className="mt-1.5 sm:mt-2 h-20 sm:h-28 rounded-lg sm:rounded-xl overflow-hidden bg-gray-100">
               <img
                 src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=400&q=80"
                 alt="Vegetables"
                 className="w-full h-full object-cover group-hover:scale-105 transition"
               />
             </div>
-            <p className="text-[11px] text-emerald-700 font-bold mt-2">
-              Tomatoes, Onions, Potatoes, Palak →
+            <p className="text-[10px] sm:text-[11px] text-emerald-700 font-bold mt-1.5 truncate">
+              Tomatoes, Onions, Palak →
             </p>
           </div>
 
           <div
             onClick={() => handleCategorySelect('Fruits')}
-            className={`p-4 rounded-2xl shadow-md border cursor-pointer hover:shadow-xl transition group ${
+            className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl shadow-md border cursor-pointer hover:shadow-xl transition group ${
               selectedCategory.toLowerCase() === 'fruits' && !organicOnly
                 ? 'bg-amber-50 border-2 border-amber-600 ring-2 ring-amber-300'
                 : 'bg-white border-gray-200 hover:border-amber-500'
             }`}
           >
             <div className="flex items-center justify-between">
-              <h3 className="font-bold text-sm text-gray-900 group-hover:text-amber-800">
-                Daily Fruits &amp; Orchards
+              <h3 className="font-bold text-xs sm:text-sm text-gray-900 group-hover:text-amber-800">
+                Daily Fruits
               </h3>
               {selectedCategory.toLowerCase() === 'fruits' && !organicOnly && (
-                <span className="text-[10px] bg-amber-700 text-white px-2 py-0.5 rounded-full font-bold">
+                <span className="text-[9px] sm:text-[10px] bg-amber-700 text-white px-1.5 sm:px-2 py-0.5 rounded-full font-bold">
                   Active
                 </span>
               )}
             </div>
-            <div className="mt-2 h-28 rounded-xl overflow-hidden bg-gray-100">
+            <div className="mt-1.5 sm:mt-2 h-20 sm:h-28 rounded-lg sm:rounded-xl overflow-hidden bg-gray-100">
               <img
                 src="https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=400&q=80"
                 alt="Fruits"
                 className="w-full h-full object-cover group-hover:scale-105 transition"
               />
             </div>
-            <p className="text-[11px] text-emerald-700 font-bold mt-2">
-              Alphonso Mango, Anaar, Oranges, Apples →
+            <p className="text-[10px] sm:text-[11px] text-emerald-700 font-bold mt-1.5 truncate">
+              Alphonso, Anaar, Apples →
             </p>
           </div>
 
           <div
             onClick={() => handleCategorySelect('Grains')}
-            className={`p-4 rounded-2xl shadow-md border cursor-pointer hover:shadow-xl transition group ${
+            className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl shadow-md border cursor-pointer hover:shadow-xl transition group ${
               selectedCategory.toLowerCase() === 'grains' && !organicOnly
                 ? 'bg-amber-50 border-2 border-amber-600 ring-2 ring-amber-300'
                 : 'bg-white border-gray-200 hover:border-emerald-500'
             }`}
           >
             <div className="flex items-center justify-between">
-              <h3 className="font-bold text-sm text-gray-900 group-hover:text-emerald-700">
-                Grains, Rice &amp; Pulses
+              <h3 className="font-bold text-xs sm:text-sm text-gray-900 group-hover:text-emerald-700">
+                Grains &amp; Pulses
               </h3>
               {selectedCategory.toLowerCase() === 'grains' && !organicOnly && (
-                <span className="text-[10px] bg-amber-700 text-white px-2 py-0.5 rounded-full font-bold">
+                <span className="text-[9px] sm:text-[10px] bg-amber-700 text-white px-1.5 sm:px-2 py-0.5 rounded-full font-bold">
                   Active
                 </span>
               )}
             </div>
-            <div className="mt-2 h-28 rounded-xl overflow-hidden bg-gray-100">
+            <div className="mt-1.5 sm:mt-2 h-20 sm:h-28 rounded-lg sm:rounded-xl overflow-hidden bg-gray-100">
               <img
                 src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=400&q=80"
                 alt="Grains"
                 className="w-full h-full object-cover group-hover:scale-105 transition"
               />
             </div>
-            <p className="text-[11px] text-emerald-700 font-bold mt-2">
-              Sharbati Gehun &amp; Basmati Rice →
+            <p className="text-[10px] sm:text-[11px] text-emerald-700 font-bold mt-1.5 truncate">
+              Sharbati Gehun, Basmati →
             </p>
           </div>
 
@@ -438,29 +439,29 @@ function AgritechMarketplaceHomeContent() {
                 if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }, 50);
             }}
-            className={`p-4 rounded-2xl shadow-md border cursor-pointer hover:shadow-xl transition group ${
+            className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl shadow-md border cursor-pointer hover:shadow-xl transition group ${
               organicOnly ? 'bg-emerald-50 border-2 border-emerald-600 ring-2 ring-emerald-300' : 'bg-white border-gray-200'
             }`}
           >
             <div className="flex items-center justify-between">
-              <h3 className="font-bold text-sm text-gray-900 group-hover:text-emerald-700">
-                Certified Organic Store
+              <h3 className="font-bold text-xs sm:text-sm text-gray-900 group-hover:text-emerald-700">
+                Organic Store
               </h3>
               {organicOnly && (
-                <span className="text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded-full font-bold">
+                <span className="text-[9px] sm:text-[10px] bg-emerald-600 text-white px-1.5 sm:px-2 py-0.5 rounded-full font-bold">
                   Active
                 </span>
               )}
             </div>
-            <div className="mt-2 h-28 rounded-xl overflow-hidden bg-gray-100">
+            <div className="mt-1.5 sm:mt-2 h-20 sm:h-28 rounded-lg sm:rounded-xl overflow-hidden bg-gray-100">
               <img
                 src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&q=80"
                 alt="Organic"
                 className="w-full h-full object-cover group-hover:scale-105 transition"
               />
             </div>
-            <p className="text-[11px] text-emerald-700 font-bold mt-2">
-              Zero Chemical • Verified Farms →
+            <p className="text-[10px] sm:text-[11px] text-emerald-700 font-bold mt-1.5 truncate">
+              Zero Chemical • NPOP →
             </p>
           </div>
         </div>
@@ -469,8 +470,8 @@ function AgritechMarketplaceHomeContent() {
       {/* 4. MAIN PRODUCT MARKETPLACE (SIDEBAR FILTERS + PRODUCTS GRID) */}
       <div id="marketplace-products" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 scroll-mt-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* LEFT SIDEBAR FILTERS */}
-          <aside className="lg:col-span-3 bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-6 text-xs">
+          {/* LEFT SIDEBAR FILTERS (DESKTOP ONLY) */}
+          <aside className="hidden lg:block lg:col-span-3 bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-6 text-xs sticky top-28">
             <div className="flex items-center justify-between pb-3 border-b border-gray-100">
               <h3 className="font-black text-sm text-gray-900 flex items-center gap-1.5">
                 <Filter className="w-4 h-4 text-emerald-700" />
@@ -729,24 +730,37 @@ function AgritechMarketplaceHomeContent() {
             )}
 
             {/* Results & Sort Bar */}
-            <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-              <div>
+            <div className="bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-gray-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 text-xs">
+              <div className="flex items-center justify-between gap-2">
                 <span className="text-gray-600">
                   Showing <strong>{filteredProducts.length}</strong>{' '}
                   <strong className="text-emerald-950">
-                    {organicOnly ? 'Certified Organic' : selectedCategory === 'All' ? 'farm produce items' : selectedCategory}
+                    {organicOnly ? 'Certified Organic' : selectedCategory === 'All' ? 'items' : selectedCategory}
                   </strong>{' '}
-                  delivering to <strong className="text-emerald-900">{buyerLocation.city}, {buyerLocation.state}</strong>
+                  for <strong className="text-emerald-900">{buyerLocation.city}</strong>
                 </span>
+
+                {/* Mobile Filter Sheet Trigger Button */}
+                <button
+                  type="button"
+                  onClick={() => setMobileFilterOpen(true)}
+                  className="lg:hidden flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold rounded-xl text-xs shrink-0 transition"
+                >
+                  <Filter className="w-3.5 h-3.5 text-emerald-700" />
+                  <span>Filters</span>
+                  {(selectedCategory !== 'All' || selectedState !== 'All' || organicOnly || priceRange !== 'All' || nearestOnly) && (
+                    <span className="w-2 h-2 rounded-full bg-[#f59e0b]" />
+                  )}
+                </button>
               </div>
 
               {/* Sort By Dropdown */}
-              <div className="flex items-center gap-2">
-                <span className="text-gray-500 font-semibold">Sort by:</span>
+              <div className="flex items-center justify-between sm:justify-end gap-2 pt-1 sm:pt-0 border-t sm:border-t-0 border-gray-100">
+                <span className="text-gray-500 font-semibold text-[11px] sm:text-xs">Sort by:</span>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="p-2 border border-gray-300 rounded-lg bg-gray-50 text-xs font-semibold focus:outline-none cursor-pointer"
+                  className="p-1.5 sm:p-2 border border-gray-300 rounded-lg bg-gray-50 text-xs font-semibold focus:outline-none cursor-pointer"
                 >
                   <option value="featured">Featured Freshness</option>
                   <option value="nearest">Nearest Farm Origin First</option>
@@ -757,21 +771,21 @@ function AgritechMarketplaceHomeContent() {
               </div>
             </div>
 
-            {/* Produce Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {/* Produce Grid (2 COLUMNS ON MOBILE, 3 ON TABLET/DESKTOP) */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2.5 sm:gap-4 md:gap-5">
               {filteredProducts.map((product) => {
                 const transit = getTransitEstimate(product.district, product.state);
 
                 return (
                   <div
                     key={product.id}
-                    className="bg-white rounded-2xl border border-gray-200 hover:border-emerald-500 shadow-sm hover:shadow-xl transition-all duration-200 flex flex-col justify-between overflow-hidden group p-4 space-y-3"
+                    className="bg-white rounded-xl sm:rounded-2xl border border-gray-200 hover:border-emerald-500 shadow-sm hover:shadow-xl transition-all duration-200 flex flex-col justify-between overflow-hidden group p-2.5 sm:p-4 space-y-2 sm:space-y-3"
                   >
                     {/* Top Badges */}
-                    <div className="flex items-center justify-between min-h-[22px]">
-                      <span className="px-2 py-0.5 bg-emerald-100 text-emerald-900 font-bold text-[10px] rounded-md flex items-center gap-1">
-                        <Sparkles className="w-3 h-3 text-emerald-700" />
-                        {product.grade}
+                    <div className="flex items-center justify-between min-h-[20px] sm:min-h-[22px] gap-1">
+                      <span className="px-1.5 sm:px-2 py-0.5 bg-emerald-100 text-emerald-900 font-bold text-[9px] sm:text-[10px] rounded-md flex items-center gap-1 shrink-0">
+                        <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-emerald-700" />
+                        <span>{product.grade}</span>
                       </span>
 
                       {product.organic && (
@@ -780,10 +794,10 @@ function AgritechMarketplaceHomeContent() {
                             e.stopPropagation();
                             setViewCertificateProduct(product);
                           }}
-                          className="px-2 py-0.5 bg-emerald-50 text-emerald-800 text-[10px] font-bold rounded-md border border-emerald-300 hover:bg-emerald-100 transition flex items-center gap-1"
+                          className="px-1.5 sm:px-2 py-0.5 bg-emerald-50 text-emerald-800 text-[8.5px] sm:text-[10px] font-bold rounded-md border border-emerald-300 hover:bg-emerald-100 transition flex items-center gap-1 truncate"
                         >
-                          <FileCheck className="w-3 h-3 text-emerald-700" />
-                          <span>Lab Tested Organic</span>
+                          <FileCheck className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-emerald-700 shrink-0" />
+                          <span className="truncate">Organic</span>
                         </button>
                       )}
                     </div>
@@ -791,7 +805,7 @@ function AgritechMarketplaceHomeContent() {
                     {/* Image */}
                     <div
                       onClick={() => handleOpenQuickView(product)}
-                      className="relative h-44 w-full bg-gray-50 rounded-xl overflow-hidden cursor-pointer"
+                      className="relative h-32 sm:h-44 w-full bg-gray-50 rounded-lg sm:rounded-xl overflow-hidden cursor-pointer"
                     >
                       <img
                         src={product.image}
@@ -801,81 +815,81 @@ function AgritechMarketplaceHomeContent() {
                     </div>
 
                     {/* Product Body */}
-                    <div className="space-y-2">
+                    <div className="space-y-1.5 sm:space-y-2">
                       <h3
                         onClick={() => handleOpenQuickView(product)}
-                        className="text-sm font-bold text-gray-900 hover:text-emerald-700 cursor-pointer line-clamp-2 leading-tight"
+                        className="text-xs sm:text-sm font-bold text-gray-900 hover:text-emerald-700 cursor-pointer line-clamp-2 leading-tight min-h-[32px] sm:min-h-[38px]"
                       >
                         {product.name}
                       </h3>
 
-                      {/* Anti-Fraud Unique Barcode Tag (Clickable to view full barcode) */}
+                      {/* Anti-Fraud Unique Barcode Tag */}
                       <button
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           setViewBarcodeProduct(product);
                         }}
-                        className="w-full flex items-center justify-between text-[10px] font-mono text-gray-700 bg-emerald-50/60 hover:bg-emerald-100 hover:text-emerald-950 px-2.5 py-1.5 rounded-lg border border-emerald-200/90 transition-all cursor-pointer group/barcode text-left shadow-2xs"
+                        className="w-full flex items-center justify-between text-[8.5px] sm:text-[10px] font-mono text-gray-700 bg-emerald-50/60 hover:bg-emerald-100 hover:text-emerald-950 px-1.5 sm:px-2.5 py-1 sm:py-1.5 rounded-lg border border-emerald-200/90 transition-all cursor-pointer group/barcode text-left shadow-2xs"
                         title="Click to view full scannable produce barcode"
                       >
-                        <span className="flex items-center gap-1.5 font-bold text-gray-800 group-hover/barcode:text-emerald-950">
-                          <Barcode className="w-3.5 h-3.5 text-emerald-800 shrink-0" />
-                          <span className="underline decoration-dotted underline-offset-2">{product.barcode}</span>
+                        <span className="flex items-center gap-1 sm:gap-1.5 font-bold text-gray-800 group-hover/barcode:text-emerald-950 truncate">
+                          <Barcode className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-800 shrink-0" />
+                          <span className="underline decoration-dotted underline-offset-2 truncate">{product.barcode}</span>
                         </span>
-                        <span className="text-emerald-800 font-bold text-[9.5px] bg-white px-1.5 py-0.5 rounded border border-emerald-200 shrink-0">
-                          Kisan: {product.kisanId}
+                        <span className="text-emerald-800 font-bold text-[8px] sm:text-[9.5px] bg-white px-1 sm:px-1.5 py-0.5 rounded border border-emerald-200 shrink-0 hidden xs:inline">
+                          Kisan: {product.kisanId.slice(-6)}
                         </span>
                       </button>
 
                       {/* Price Block */}
                       <div>
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-red-600 font-bold text-xs">
+                        <div className="flex items-baseline gap-1.5 sm:gap-2">
+                          <span className="text-red-600 font-bold text-[10px] sm:text-xs">
                             -{product.discountPercent}%
                           </span>
-                          <span className="text-xl font-black text-gray-900 leading-none">
+                          <span className="text-base sm:text-xl font-black text-gray-900 leading-none">
                             ₹{product.pricePerKg}
                           </span>
-                          <span className="text-xs text-gray-500">/ {product.unit}</span>
+                          <span className="text-[10px] sm:text-xs text-gray-500">/ {product.unit}</span>
                         </div>
-                        <div className="text-[11px] text-gray-400">
+                        <div className="text-[10px] sm:text-[11px] text-gray-400">
                           M.R.P.: <span className="line-through">₹{product.mrp}</span>
                         </div>
                       </div>
 
                       {/* Dynamic Realistic Delivery Transit Box */}
-                      <div className="p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-100 space-y-1 text-[11px]">
+                      <div className="p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl bg-emerald-50/70 border border-emerald-100 space-y-0.5 sm:space-y-1 text-[10px] sm:text-[11px]">
                         <div className="flex items-center gap-1 text-emerald-900 font-bold">
-                          <Truck className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
-                          <span>Estimated Transit: {transit.days}</span>
+                          <Truck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-700 shrink-0" />
+                          <span className="truncate">{transit.days}</span>
                         </div>
-                        <p className="text-gray-500 text-[10px]">
-                          📍 Farm Origin: <strong>{product.farmLocation}, {product.state}</strong>
+                        <p className="text-gray-500 text-[9px] sm:text-[10px] truncate">
+                          📍 {product.district}, {product.state}
                         </p>
                       </div>
 
                       {/* Seller Info */}
-                      <p className="text-[11px] text-gray-500 truncate pt-1">
-                        Sold by: <span className="font-semibold text-gray-700">{product.farmerName}</span>
+                      <p className="text-[10px] sm:text-[11px] text-gray-500 truncate pt-0.5">
+                        By: <span className="font-semibold text-gray-700">{product.farmerName}</span>
                       </p>
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="pt-2 grid grid-cols-2 gap-2">
+                    <div className="pt-1 sm:pt-2 grid grid-cols-2 gap-1 sm:gap-2">
                       <button
                         onClick={() => handleAddToCart(product, 1)}
-                        className="py-2.5 px-3 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center justify-center gap-1.5"
+                        className="py-2 sm:py-2.5 px-1 sm:px-3 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-[10px] sm:text-xs rounded-lg sm:rounded-xl shadow-sm transition flex items-center justify-center gap-1"
                       >
-                        <ShoppingCart className="w-3.5 h-3.5" />
-                        <span>Add to Cart</span>
+                        <ShoppingCart className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
+                        <span className="truncate">Add</span>
                       </button>
 
                       <button
                         onClick={() => handleBuyNow(product, 1)}
-                        className="py-2.5 px-3 bg-[#f59e0b] hover:bg-[#d97706] text-white font-bold text-xs rounded-xl shadow-sm transition"
+                        className="py-2 sm:py-2.5 px-1 sm:px-3 bg-[#f59e0b] hover:bg-[#d97706] text-white font-bold text-[10px] sm:text-xs rounded-lg sm:rounded-xl shadow-sm transition flex items-center justify-center"
                       >
-                        Buy Now
+                        <span className="truncate">Buy Now</span>
                       </button>
                     </div>
                   </div>
@@ -884,6 +898,151 @@ function AgritechMarketplaceHomeContent() {
             </div>
           </main>
         </div>
+
+        {/* MOBILE FILTER DRAWER / SHEET */}
+        {mobileFilterOpen && (
+          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex justify-end lg:hidden">
+            <div className="w-full max-w-sm bg-white h-full flex flex-col p-5 space-y-4 overflow-y-auto animate-in slide-in-from-right duration-200">
+              <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+                <h3 className="font-black text-base text-gray-900 flex items-center gap-2">
+                  <Filter className="w-4 h-4 text-emerald-700" />
+                  <span>Filter Produce</span>
+                </h3>
+                <button
+                  onClick={() => setMobileFilterOpen(false)}
+                  className="p-1 rounded-lg text-gray-400 hover:text-gray-700"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Proximity */}
+              <div className="space-y-2">
+                <h4 className="font-bold text-gray-900 text-xs">Farm Proximity</h4>
+                <label className="flex items-center gap-2 cursor-pointer font-semibold text-emerald-900 text-xs">
+                  <input
+                    type="checkbox"
+                    checked={nearestOnly}
+                    onChange={(e) => {
+                      setNearestOnly(e.target.checked);
+                      showToast(e.target.checked ? `Farms within ${buyerLocation.state}` : 'All farms');
+                    }}
+                    className="rounded text-emerald-600 focus:ring-emerald-500"
+                  />
+                  <span>📍 Only Farms in {buyerLocation.state}</span>
+                </label>
+              </div>
+
+              {/* Organic toggle */}
+              <div className="space-y-2 pt-2 border-t border-gray-100">
+                <h4 className="font-bold text-gray-900 text-xs">Organic Certification</h4>
+                <label className="flex items-center gap-2 cursor-pointer font-semibold text-emerald-900 text-xs">
+                  <input
+                    type="checkbox"
+                    checked={organicOnly}
+                    onChange={(e) => {
+                      setOrganicOnly(e.target.checked);
+                      showToast(e.target.checked ? 'Certified Organic Only' : 'All Produce');
+                    }}
+                    className="rounded text-emerald-600 focus:ring-emerald-500"
+                  />
+                  <span>🌿 100% Certified Organic Only (NPOP)</span>
+                </label>
+              </div>
+
+              {/* Category */}
+              <div className="space-y-2 pt-2 border-t border-gray-100">
+                <h4 className="font-bold text-gray-900 text-xs">Category</h4>
+                <div className="grid grid-cols-2 gap-1.5 text-xs">
+                  {['All', 'Vegetables', 'Fruits', 'Grains', 'Spices', 'Pulses'].map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => handleCategorySelect(cat)}
+                      className={`py-2 px-2.5 rounded-lg text-left transition font-semibold ${
+                        selectedCategory.toLowerCase() === cat.toLowerCase() && !organicOnly
+                          ? 'bg-emerald-800 text-white font-bold'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      {cat === 'All' ? 'All Produce' : cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Farm State Origin */}
+              <div className="space-y-2 pt-2 border-t border-gray-100">
+                <h4 className="font-bold text-gray-900 text-xs">Farm State Origin</h4>
+                <select
+                  value={selectedState}
+                  onChange={(e) => {
+                    setSelectedState(e.target.value);
+                    showToast(`Selected State: ${e.target.value}`);
+                  }}
+                  className="w-full p-2.5 border border-gray-300 rounded-xl text-xs bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                >
+                  <option value="All">All Indian States</option>
+                  <option value="Maharashtra">Maharashtra (Nashik, Pune, Solapur)</option>
+                  <option value="Uttar Pradesh">Uttar Pradesh (Varanasi)</option>
+                  <option value="Madhya Pradesh">Madhya Pradesh (Sehore)</option>
+                  <option value="Punjab">Punjab (Ludhiana)</option>
+                  <option value="Jammu and Kashmir">Jammu &amp; Kashmir (Shopian)</option>
+                  <option value="Tamil Nadu">Tamil Nadu (Ooty)</option>
+                </select>
+              </div>
+
+              {/* Price Filter */}
+              <div className="space-y-2 pt-2 border-t border-gray-100 text-xs">
+                <h4 className="font-bold text-gray-900">Price (per kg)</h4>
+                <div className="space-y-1">
+                  {[
+                    { id: 'All', label: 'All Prices' },
+                    { id: 'under-50', label: 'Under ₹50' },
+                    { id: '50-100', label: '₹50 to ₹100' },
+                    { id: '100-200', label: '₹100 to ₹200' },
+                    { id: 'above-200', label: 'Over ₹200' },
+                  ].map((item) => (
+                    <label key={item.id} className="flex items-center gap-2 cursor-pointer py-1">
+                      <input
+                        type="radio"
+                        name="mobilePrice"
+                        checked={priceRange === item.id}
+                        onChange={() => setPriceRange(item.id)}
+                        className="text-emerald-700"
+                      />
+                      <span>{item.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-gray-100 flex gap-2">
+                <button
+                  onClick={() => {
+                    setSelectedCategory('All');
+                    setSelectedState('All');
+                    setSelectedDistrict('All');
+                    setOrganicOnly(false);
+                    setPriceRange('All');
+                    setMinRating(0);
+                    setNearestOnly(false);
+                    setMobileFilterOpen(false);
+                    showToast('All filters cleared');
+                  }}
+                  className="flex-1 py-2.5 rounded-xl border border-gray-300 font-bold hover:bg-gray-50 text-xs"
+                >
+                  Clear All
+                </button>
+                <button
+                  onClick={() => setMobileFilterOpen(false)}
+                  className="flex-1 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs shadow-md transition"
+                >
+                  Apply Filters
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 5. PRODUCT QUICK-VIEW MODAL */}

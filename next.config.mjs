@@ -13,11 +13,6 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  webpack: (config) => {
-    config.resolve.symlinks = false;
-    config.cache = false;
-    return config;
-  },
 };
 
 export default nextConfig;

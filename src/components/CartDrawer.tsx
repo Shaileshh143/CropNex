@@ -151,10 +151,10 @@ export default function CartDrawer() {
           onClick={() => setIsCartOpen(false)}
         />
 
-        <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-          <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col text-gray-900">
+        <div className="fixed inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
+          <div className="w-screen max-w-full sm:max-w-md bg-white shadow-2xl flex flex-col text-gray-900">
             {/* Header */}
-            <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between bg-emerald-50/60">
+            <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-100 flex items-center justify-between bg-emerald-50/60">
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-xl bg-emerald-800 text-white flex items-center justify-center">
                   <ShoppingBag className="w-5 h-5 text-[#f59e0b]" />
@@ -176,7 +176,7 @@ export default function CartDrawer() {
 
             {/* Free Delivery Bar */}
             {cart.length > 0 && (
-              <div className="px-6 py-2.5 bg-emerald-50 border-b border-emerald-100 flex items-center gap-2 text-xs text-emerald-900 font-semibold">
+              <div className="px-4 sm:px-6 py-2 sm:py-2.5 bg-emerald-50 border-b border-emerald-100 flex items-center gap-2 text-xs text-emerald-900 font-semibold">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                 <span>
                   {isFreeDelivery ? (
@@ -189,7 +189,7 @@ export default function CartDrawer() {
             )}
 
             {/* Cart Items List */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-4">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-3 sm:space-y-4">
               {cart.length === 0 ? (
                 <div className="text-center py-20 space-y-3">
                   <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center mx-auto text-emerald-600">
@@ -266,7 +266,7 @@ export default function CartDrawer() {
 
             {/* Footer Summary & Proceed Button */}
             {cart.length > 0 && (
-              <div className="p-6 border-t border-gray-100 bg-gray-50 space-y-3.5">
+              <div className="p-4 sm:p-6 border-t border-gray-100 bg-gray-50 space-y-3 sm:space-y-3.5">
                 <div className="space-y-1.5 text-xs text-gray-600">
                   <div className="flex justify-between">
                     <span>Produce Subtotal:</span>

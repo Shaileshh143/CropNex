@@ -695,11 +695,11 @@ export default function DedicatedFarmerPortalPage() {
               </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
               {products.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm hover:shadow-md transition space-y-3 flex flex-col justify-between"
+                  className="bg-white rounded-xl sm:rounded-2xl border border-gray-200 p-3.5 sm:p-4 shadow-sm hover:shadow-md transition space-y-3 flex flex-col justify-between"
                 >
                   <div className="space-y-2.5">
                     <div className="h-40 rounded-xl overflow-hidden bg-gray-50 relative">

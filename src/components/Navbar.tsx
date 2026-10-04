@@ -120,29 +120,29 @@ export default function Navbar() {
             setTempPincode(buyerLocation.pincode);
             setLocationModalOpen(true);
           }}
-          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-left shrink-0 transition"
+          className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg hover:bg-white/10 text-left shrink-0 transition"
           title="Click to change your delivery location"
         >
           <MapPin className="w-4 h-4 text-[#f59e0b] shrink-0" />
           <div className="text-[11px] leading-tight">
-            <span className="text-emerald-200 block font-normal">
+            <span className="text-emerald-200 hidden sm:block font-normal">
               Deliver to {buyerLocation.city} ({buyerLocation.state})
             </span>
             <span className="font-bold text-white block">
-              {buyerLocation.pincode} • Change
+              <span className="sm:hidden">{buyerLocation.city} </span>{buyerLocation.pincode} • <span className="underline decoration-dotted">Change</span>
             </span>
           </div>
         </button>
 
-        {/* Central Search Bar */}
+        {/* Desktop Central Search Bar */}
         <form
           onSubmit={handleSearchSubmit}
-          className="flex-1 max-w-2xl flex items-center h-10 rounded-lg overflow-hidden bg-white focus-within:ring-2 focus-within:ring-[#f59e0b] mx-1 sm:mx-2 shadow-inner"
+          className="hidden sm:flex flex-1 max-w-2xl items-center h-10 rounded-lg overflow-hidden bg-white focus-within:ring-2 focus-within:ring-[#f59e0b] mx-2 shadow-inner"
         >
           <select
             value={searchCategory}
             onChange={(e) => setSearchCategory(e.target.value)}
-            className="h-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs px-3 font-semibold border-r border-gray-300 focus:outline-none cursor-pointer hidden sm:block"
+            className="h-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs px-3 font-semibold border-r border-gray-300 focus:outline-none cursor-pointer"
           >
             {categories.map((cat) => (
               <option key={cat} value={cat}>
@@ -307,6 +307,29 @@ export default function Navbar() {
             </span>
           </button>
         </div>
+      </div>
+
+      {/* MOBILE FULL-WIDTH SEARCH BAR (PHONE ONLY) */}
+      <div className="sm:hidden bg-[#0e2a1b] px-3 pb-2.5 pt-0.5">
+        <form
+          onSubmit={handleSearchSubmit}
+          className="w-full flex items-center h-10 rounded-xl overflow-hidden bg-white shadow-md focus-within:ring-2 focus-within:ring-[#f59e0b]"
+        >
+          <input
+            type="text"
+            placeholder="Search vegetables, fruits, grains..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="flex-1 h-full px-3 text-xs text-gray-900 focus:outline-none placeholder-gray-400"
+          />
+          <button
+            type="submit"
+            className="h-full px-4 bg-[#f59e0b] hover:bg-[#d97706] text-white flex items-center justify-center transition"
+            aria-label="Search"
+          >
+            <Search className="w-4 h-4 stroke-[2.5]" />
+          </button>
+        </form>
       </div>
 
       {/* 2. SUB-NAVBAR CATEGORY STRIP (MID FOREST GREEN) */}
@@ -520,35 +543,61 @@ export default function Navbar() {
       )}
 
       {/* 4. MOBILE BOTTOM APP BAR (PHONE OPTIMIZED) */}
-      <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0e2a1b] text-white border-t border-emerald-800/60 py-2 px-3 flex items-center justify-around shadow-2xl">
-        <Link href="/" className="flex flex-col items-center gap-0.5 text-[10px] font-bold text-emerald-100 hover:text-[#f59e0b]">
+      <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0e2a1b]/95 backdrop-blur-md text-white border-t border-emerald-800/80 py-1.5 px-2 flex items-center justify-around shadow-2xl">
+        <Link
+          href="/"
+          className={`flex flex-col items-center gap-0.5 text-[10px] font-bold py-1 px-2 rounded-xl transition ${
+            pathname === '/' ? 'text-[#f59e0b] bg-white/10' : 'text-emerald-100 hover:text-[#f59e0b]'
+          }`}
+        >
           <Home className="w-5 h-5" />
           <span>Home</span>
         </Link>
 
-        <Link href="/?category=All" className="flex flex-col items-center gap-0.5 text-[10px] font-bold text-emerald-100 hover:text-[#f59e0b]">
-          <Menu className="w-5 h-5" />
-          <span>Categories</span>
+        <Link
+          href="/?category=Vegetables"
+          className="flex flex-col items-center gap-0.5 text-[10px] font-bold py-1 px-2 rounded-xl text-emerald-100 hover:text-[#f59e0b] transition"
+        >
+          <span className="text-base leading-none">🥬</span>
+          <span>Veggies</span>
         </Link>
 
-        <Link href="/seller" className="flex flex-col items-center gap-0.5 text-[10px] font-bold text-[#f59e0b]">
+        <Link
+          href="/?category=Fruits"
+          className="flex flex-col items-center gap-0.5 text-[10px] font-bold py-1 px-2 rounded-xl text-emerald-100 hover:text-[#f59e0b] transition"
+        >
+          <span className="text-base leading-none">🍎</span>
+          <span>Fruits</span>
+        </Link>
+
+        <Link
+          href="/seller"
+          className={`flex flex-col items-center gap-0.5 text-[10px] font-bold py-1 px-2 rounded-xl transition ${
+            pathname?.startsWith('/seller') ? 'text-[#f59e0b] bg-white/10' : 'text-[#f59e0b] hover:text-amber-300'
+          }`}
+        >
           <Store className="w-5 h-5" />
-          <span>Sell on CropNex</span>
+          <span>Sell</span>
         </Link>
 
-        <Link href="/orders" className="flex flex-col items-center gap-0.5 text-[10px] font-bold text-emerald-100 hover:text-[#f59e0b]">
+        <Link
+          href="/orders"
+          className={`flex flex-col items-center gap-0.5 text-[10px] font-bold py-1 px-2 rounded-xl transition ${
+            pathname?.startsWith('/orders') ? 'text-[#f59e0b] bg-white/10' : 'text-emerald-100 hover:text-[#f59e0b]'
+          }`}
+        >
           <Package className="w-5 h-5" />
           <span>Orders</span>
         </Link>
 
         <button
           onClick={() => setIsCartOpen(true)}
-          className="flex flex-col items-center gap-0.5 text-[10px] font-bold text-emerald-100 hover:text-[#f59e0b] relative"
+          className="flex flex-col items-center gap-0.5 text-[10px] font-bold py-1 px-2 rounded-xl text-emerald-100 hover:text-[#f59e0b] transition relative"
         >
           <div className="relative">
             <ShoppingCart className="w-5 h-5" />
             {totalItems > 0 && (
-              <span className="absolute -top-1 -right-2 bg-[#f59e0b] text-slate-900 font-black text-[9px] w-4 h-4 rounded-full flex items-center justify-center">
+              <span className="absolute -top-1 -right-2 bg-[#f59e0b] text-slate-900 font-black text-[9px] w-4 h-4 rounded-full flex items-center justify-center shadow">
                 {totalItems}
               </span>
             )}

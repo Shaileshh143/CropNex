@@ -315,52 +315,52 @@ export default function LiveTransitMap({ isOptimized = true, onSelectHub }: Live
         />
 
         {/* Floating Telematics Overlay Badge */}
-        <div className="absolute top-6 left-8 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-gray-200 shadow-xl max-w-[280px] pointer-events-auto space-y-2">
-          <div className="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
-            <div className="flex items-center gap-1.5">
-              <Truck className="w-4 h-4 text-emerald-600" />
-              <span className="font-black text-xs text-gray-900">EV Reefer Truck #4</span>
+        <div className="absolute top-2.5 left-2.5 sm:top-6 sm:left-8 bg-white/95 backdrop-blur-md p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl border border-gray-200 shadow-xl max-w-[210px] sm:max-w-[280px] pointer-events-auto space-y-1.5 sm:space-y-2">
+          <div className="flex items-center justify-between gap-1.5 border-b border-gray-100 pb-1.5 sm:pb-2">
+            <div className="flex items-center gap-1 sm:gap-1.5">
+              <Truck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0" />
+              <span className="font-black text-[11px] sm:text-xs text-gray-900">EV Reefer #4</span>
             </div>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
-              On Highway
+            <span className="text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+              Highway
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 text-[11px]">
+          <div className="grid grid-cols-2 gap-1.5 sm:gap-2 text-[10px] sm:text-[11px]">
             <div>
-              <span className="text-gray-400 block text-[10px]">Speed</span>
+              <span className="text-gray-400 block text-[9px] sm:text-[10px]">Speed</span>
               <span className="font-bold text-gray-800">58 km/h</span>
             </div>
             <div>
-              <span className="text-gray-400 block text-[10px]">Reefer Cold</span>
+              <span className="text-gray-400 block text-[9px] sm:text-[10px]">Reefer Cold</span>
               <span className="font-bold text-emerald-700 flex items-center gap-0.5">
-                <Thermometer className="w-3 h-3 text-emerald-600" /> 4.2°C
+                <Thermometer className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-emerald-600" /> 4.2°C
               </span>
             </div>
             <div>
-              <span className="text-gray-400 block text-[10px]">Current Segment</span>
-              <span className="font-bold text-gray-800">NH-60 Highway</span>
+              <span className="text-gray-400 block text-[9px] sm:text-[10px]">Segment</span>
+              <span className="font-bold text-gray-800">NH-60</span>
             </div>
             <div>
-              <span className="text-gray-400 block text-[10px]">Destination ETA</span>
-              <span className="font-bold text-blue-700">11:30 AM (Pune)</span>
+              <span className="text-gray-400 block text-[9px] sm:text-[10px]">ETA</span>
+              <span className="font-bold text-blue-700">11:30 AM</span>
             </div>
           </div>
         </div>
 
         {/* Legend Overlay at Bottom Right */}
-        <div className="absolute bottom-4 right-8 bg-white/90 backdrop-blur-sm px-3 py-2 rounded-xl border border-gray-200 shadow-md text-[10px] flex items-center gap-3">
+        <div className="absolute bottom-2.5 right-2.5 sm:bottom-4 sm:right-8 bg-white/90 backdrop-blur-sm px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg sm:rounded-xl border border-gray-200 shadow-md text-[8.5px] sm:text-[10px] flex items-center gap-1.5 sm:gap-3">
           <div className="flex items-center gap-1">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
-            <span className="text-gray-600 font-bold">Completed Hub</span>
+            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-emerald-600" />
+            <span className="text-gray-600 font-bold">Done</span>
           </div>
           <div className="flex items-center gap-1">
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-            <span className="text-gray-600 font-bold">In-Transit Hub</span>
+            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-amber-500" />
+            <span className="text-gray-600 font-bold">In-Transit</span>
           </div>
           <div className="flex items-center gap-1">
-            <span className="w-2.5 h-2.5 rounded-full bg-blue-600" />
-            <span className="text-gray-600 font-bold">APMC Terminal</span>
+            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-blue-600" />
+            <span className="text-gray-600 font-bold">APMC</span>
           </div>
         </div>
       </div>

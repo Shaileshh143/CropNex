@@ -270,7 +270,7 @@ export default function CheckoutPage() {
           {/* LEFT COLUMN: ADDRESS, PAYMENT & ITEMS (8 COLS) */}
           <div className="lg:col-span-8 space-y-6">
             {/* Step 1: Delivery Address */}
-            <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm space-y-4 text-xs">
+            <div className="bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-gray-200 shadow-sm space-y-4 text-xs">
               <div className="flex items-center justify-between pb-3 border-b border-gray-100">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-full bg-emerald-800 text-white font-black flex items-center justify-center text-xs">
@@ -349,7 +349,7 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                   <label className="block font-bold text-gray-800 mb-1">Town / City</label>
                   <input
@@ -384,7 +384,7 @@ export default function CheckoutPage() {
             </div>
 
             {/* Step 2: Payment Method */}
-            <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm space-y-4 text-xs">
+            <div className="bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-gray-200 shadow-sm space-y-4 text-xs">
               <div className="flex items-center gap-2 pb-3 border-b border-gray-100">
                 <div className="w-7 h-7 rounded-full bg-emerald-800 text-white font-black flex items-center justify-center text-xs">
                   2
@@ -462,7 +462,7 @@ export default function CheckoutPage() {
             </div>
 
             {/* Step 3: Review Items & Delivery Transit */}
-            <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm space-y-4 text-xs">
+            <div className="bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-gray-200 shadow-sm space-y-4 text-xs">
               <div className="flex items-center justify-between pb-3 border-b border-gray-100">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-full bg-emerald-800 text-white font-black flex items-center justify-center text-xs">

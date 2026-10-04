@@ -163,7 +163,7 @@ export default function YourOrdersPage() {
             className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm text-xs"
           >
             {/* Header Strip */}
-            <div className="bg-[#f2f7f4] px-6 py-3.5 border-b border-gray-200 grid grid-cols-2 sm:grid-cols-4 gap-4 text-gray-600">
+            <div className="bg-[#f2f7f4] px-4 sm:px-6 py-3 sm:py-3.5 border-b border-gray-200 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 text-gray-600">
               <div>
                 <span className="block text-[10px] uppercase font-bold tracking-wider text-gray-500">
                   Order Placed
@@ -190,20 +190,20 @@ export default function YourOrdersPage() {
               </div>
 
               <div className="text-right">
-                <span className="block text-[10px] uppercase font-bold tracking-wider text-gray-500">
-                  Order ID: {order.orderNumber}
+                <span className="block text-[10px] uppercase font-bold tracking-wider text-gray-500 truncate">
+                  ID: {order.orderNumber}
                 </span>
                 <button
                   onClick={() => setInvoiceModalOrder(order)}
                   className="text-emerald-700 hover:underline font-bold"
                 >
-                  Download Invoice ▾
+                  Invoice ▾
                 </button>
               </div>
             </div>
 
             {/* Body */}
-            <div className="p-6 flex flex-col md:flex-row items-start justify-between gap-6">
+            <div className="p-4 sm:p-6 flex flex-col md:flex-row items-start justify-between gap-4 sm:gap-6">
               <div className="flex-1 space-y-4">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
