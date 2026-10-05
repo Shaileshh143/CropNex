@@ -25,6 +25,7 @@ import {
   Download,
   ShieldCheck,
   AlertCircle,
+  Mail,
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -401,6 +402,14 @@ export default function Navbar() {
                       <Store className="w-3.5 h-3.5 text-emerald-600" />
                       Seller Central
                     </Link>
+
+                    <a
+                      href="mailto:cropnexhelp@gmail.com"
+                      className="flex items-center gap-2 px-4 py-2.5 hover:bg-emerald-50 text-gray-800 transition"
+                    >
+                      <Mail className="w-3.5 h-3.5 text-emerald-600" />
+                      Help: cropnexhelp@gmail.com
+                    </a>
 
                     <button
                       onClick={handleSignOut}

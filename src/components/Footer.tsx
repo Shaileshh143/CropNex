@@ -40,7 +40,14 @@ export default function AgritechFooter() {
               <li><a href="#" className="hover:text-white transition">Farmer Community</a></li>
               <li><a href="#" className="hover:text-white transition">APMC Mandi Updates</a></li>
               <li><a href="#" className="hover:text-white transition">Kisan Toll-Free: 1800-420-2026</a></li>
-              <li><a href="#" className="hover:text-white transition">Support: support@cropnex.in</a></li>
+              <li>
+                <a
+                  href="mailto:cropnexhelp@gmail.com"
+                  className="hover:text-white text-emerald-100 font-semibold transition flex items-center gap-1"
+                >
+                  <span className="text-[#f59e0b]">Help:</span> cropnexhelp@gmail.com
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -62,7 +69,14 @@ export default function AgritechFooter() {
               <li><Link href="/orders" className="hover:text-white transition">Track Your Active Orders</Link></li>
               <li><Link href="/orders" className="hover:text-white transition">Download Tax Invoices</Link></li>
               <li><Link href="/orders" className="hover:text-white transition">Quality Assurance Policy</Link></li>
-              <li><Link href="/" className="hover:text-white transition">Customer Support</Link></li>
+              <li>
+                <a
+                  href="mailto:cropnexhelp@gmail.com"
+                  className="hover:text-white text-[#f59e0b] font-semibold transition"
+                >
+                  24/7 Support: cropnexhelp@gmail.com
+                </a>
+              </li>
             </ul>
           </div>
         </div>
