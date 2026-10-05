@@ -80,6 +80,7 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState('');
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+  const [avatarImgError, setAvatarImgError] = useState(false);
 
   // Manual location state in modal
   const [tempCity, setTempCity] = useState(buyerLocation.city);
@@ -329,16 +330,28 @@ export default function Navbar() {
               <div>
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-left"
+                  className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-white/10 text-left transition"
                 >
-                  {activeUser.image ? (
-                    <img
-                      src={activeUser.image}
-                      alt={activeUser.name}
-                      className="w-7 h-7 rounded-full object-cover border border-emerald-400"
-                    />
-                  ) : null}
-                  <div className="text-[11px] leading-tight">
+                  {/* User Profile Avatar with Fallback */}
+                  <div className="relative shrink-0">
+                    {activeUser.image && !avatarImgError ? (
+                      <img
+                        src={activeUser.image}
+                        alt={activeUser.name}
+                        referrerPolicy="no-referrer"
+                        crossOrigin="anonymous"
+                        onError={() => setAvatarImgError(true)}
+                        className="w-8 h-8 rounded-full object-cover border-2 border-[#f59e0b] shadow-sm"
+                      />
+                    ) : (
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#f59e0b] to-emerald-500 text-slate-950 font-black text-xs flex items-center justify-center border-2 border-white shadow-sm">
+                        {activeUser.name?.charAt(0).toUpperCase() || 'U'}
+                      </div>
+                    )}
+                    <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 border-2 border-[#0e2a1b] rounded-full" />
+                  </div>
+
+                  <div className="text-[11px] leading-tight hidden xs:block sm:block">
                     <span className="text-emerald-200 block font-normal">
                       Hello, {activeUser.name?.split(' ')[0]}
                     </span>
@@ -350,12 +363,27 @@ export default function Navbar() {
 
                 {userDropdownOpen && (
                   <div
-                    className="absolute right-0 mt-2 w-56 bg-white text-gray-900 rounded-2xl shadow-xl border border-gray-100 py-2 z-50 text-xs"
+                    className="absolute right-0 mt-2 w-64 bg-white text-gray-900 rounded-2xl shadow-xl border border-gray-100 py-2 z-50 text-xs animate-in zoom-in-95 duration-150"
                     onClick={() => setUserDropdownOpen(false)}
                   >
-                    <div className="px-4 py-2 border-b border-gray-100">
-                      <p className="font-bold text-gray-900 truncate">{activeUser.name}</p>
-                      <p className="text-[11px] text-gray-500 truncate">{activeUser.email}</p>
+                    <div className="px-4 py-3 border-b border-gray-100 flex items-center gap-3 bg-emerald-50/50">
+                      {activeUser.image && !avatarImgError ? (
+                        <img
+                          src={activeUser.image}
+                          alt={activeUser.name}
+                          referrerPolicy="no-referrer"
+                          crossOrigin="anonymous"
+                          className="w-10 h-10 rounded-full object-cover border-2 border-emerald-600 shadow-sm shrink-0"
+                        />
+                      ) : (
+                        <div className="w-10 h-10 rounded-full bg-emerald-700 text-white font-black text-sm flex items-center justify-center shadow-sm shrink-0">
+                          {activeUser.name?.charAt(0).toUpperCase() || 'U'}
+                        </div>
+                      )}
+                      <div className="min-w-0">
+                        <p className="font-bold text-gray-900 truncate text-sm">{activeUser.name}</p>
+                        <p className="text-[11px] text-gray-500 truncate">{activeUser.email}</p>
+                      </div>
                     </div>
 
                     <Link
