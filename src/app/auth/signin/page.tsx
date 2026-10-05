@@ -4,12 +4,16 @@ import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
-import { ArrowRight, ShieldCheck, CheckCircle2, Lock, Mail, Phone, Eye, EyeOff, AlertCircle, X } from 'lucide-react';
+import { useSupabaseAuth } from '@/context/SupabaseAuthContext';
+import { ArrowRight, ShieldCheck, CheckCircle2, Lock, Mail, Phone, Eye, EyeOff, AlertCircle, X, KeyRound, ExternalLink } from 'lucide-react';
 
 function AgritechSignInContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
+
+  const { signInWithGoogle, isConfigured: isSupabaseConfigured } = useSupabaseAuth();
+  const [supabaseModalOpen, setSupabaseModalOpen] = useState(false);
 
   const [mode, setMode] = useState<'signin' | 'create'>('signin');
   const [identifier, setIdentifier] = useState('');
@@ -27,9 +31,29 @@ function AgritechSignInContent() {
   const [newPassword, setNewPassword] = useState('');
   const [resetSuccessMsg, setResetSuccessMsg] = useState<string | null>(null);
 
-  const handleGoogleSignIn = () => {
+  const handleGoogleSignIn = async () => {
+    if (!isSupabaseConfigured) {
+      setSupabaseModalOpen(true);
+      return;
+    }
+
     setLoading(true);
-    signIn('google', { callbackUrl });
+    setErrorMsg(null);
+    try {
+      const redirectUrl =
+        typeof window !== 'undefined'
+          ? `${window.location.origin}/auth/callback?callbackUrl=${encodeURIComponent(callbackUrl)}`
+          : undefined;
+
+      const { error } = await signInWithGoogle(redirectUrl);
+      if (error) {
+        setErrorMsg(error.message || 'Google authentication failed. Please try again.');
+        setLoading(false);
+      }
+    } catch (err: any) {
+      setErrorMsg(err?.message || 'Unexpected authentication error.');
+      setLoading(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -365,6 +389,69 @@ function AgritechSignInContent() {
                 <p className="text-[11px] text-gray-500">Redirecting to login...</p>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* SUPABASE GOOGLE AUTH QUICK CONNECT MODAL */}
+      {supabaseModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 sm:p-7 space-y-4 text-xs animate-in zoom-in-95 duration-150">
+            <div className="flex items-start justify-between pb-3 border-b border-gray-100">
+              <div className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-800">
+                  <KeyRound className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-black text-sm text-gray-900">Supabase Google Auth Ready</h3>
+                  <p className="text-[11px] text-gray-500">Just paste your 2 project keys to connect</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSupabaseModalOpen(false)}
+                className="p-1 text-gray-400 hover:text-gray-600 rounded-lg"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="p-3 bg-amber-50 rounded-2xl border border-amber-200 text-amber-900 space-y-1">
+              <p className="font-bold text-[12px]">Code is 100% Configured & Ready!</p>
+              <p className="text-[11px] leading-relaxed">
+                CropNex me Supabase OAuth client aur redirect routes completely integrate ho chuke hain. Bas aapko apna Supabase Project connect karna hai:
+              </p>
+            </div>
+
+            <div className="space-y-2.5 text-gray-700">
+              <div className="p-3 bg-gray-50 rounded-xl border border-gray-200 space-y-1">
+                <span className="font-black text-gray-900 block text-[11px]">Step 1: Open .env.local file</span>
+                <p className="text-[11px] text-gray-600">
+                  Apne project folder me <code>.env.local</code> open karein aur yeh do lines dalein:
+                </p>
+                <div className="bg-slate-900 text-emerald-400 p-2.5 rounded-lg font-mono text-[10px] break-all select-all">
+                  NEXT_PUBLIC_SUPABASE_URL=https://xyz.supabase.co<br />
+                  NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOi...
+                </div>
+              </div>
+
+              <div className="p-3 bg-gray-50 rounded-xl border border-gray-200 space-y-1">
+                <span className="font-black text-gray-900 block text-[11px]">Step 2: Supabase Dashboard</span>
+                <p className="text-[11px] text-gray-600">
+                  Supabase Dashboard &gt; <strong>Authentication</strong> &gt; <strong>Providers</strong> me jayein aur <strong>Google</strong> ko Enable karke apna Google Client ID &amp; Secret save kar dein.
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => setSupabaseModalOpen(false)}
+                className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-md transition text-xs"
+              >
+                Got It, Thank You!
+              </button>
+            </div>
           </div>
         </div>
       )}

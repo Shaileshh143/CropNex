@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
+import { useSupabaseAuth } from '@/context/SupabaseAuthContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { useCart } from '@/context/CartContext';
 import { useLocation } from '@/context/LocationContext';
@@ -30,6 +31,37 @@ export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const { data: session } = useSession();
+  const { user: supabaseUser, signOutSupabase } = useSupabaseAuth();
+
+  // Unified active user supporting both NextAuth & Supabase Google Login
+  const activeUser = session?.user
+    ? {
+        name: session.user.name || 'User',
+        email: session.user.email || '',
+        image: session.user.image,
+        isSupabase: false,
+      }
+    : supabaseUser
+    ? {
+        name:
+          supabaseUser.user_metadata?.full_name ||
+          supabaseUser.user_metadata?.name ||
+          supabaseUser.email?.split('@')[0] ||
+          'User',
+        email: supabaseUser.email || '',
+        image: supabaseUser.user_metadata?.avatar_url || supabaseUser.user_metadata?.picture,
+        isSupabase: true,
+      }
+    : null;
+
+  const handleSignOut = async () => {
+    if (activeUser?.isSupabase) {
+      await signOutSupabase();
+    } else {
+      await signOut();
+    }
+  };
+
   const { language, setLanguage } = useLanguage();
   const { totalItems, setIsCartOpen } = useCart();
   const {
@@ -293,15 +325,22 @@ export default function Navbar() {
 
           {/* Account Dropdown */}
           <div className="relative">
-            {session?.user ? (
+            {activeUser ? (
               <div>
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                   className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-left"
                 >
+                  {activeUser.image ? (
+                    <img
+                      src={activeUser.image}
+                      alt={activeUser.name}
+                      className="w-7 h-7 rounded-full object-cover border border-emerald-400"
+                    />
+                  ) : null}
                   <div className="text-[11px] leading-tight">
                     <span className="text-emerald-200 block font-normal">
-                      Hello, {session.user.name?.split(' ')[0]}
+                      Hello, {activeUser.name?.split(' ')[0]}
                     </span>
                     <span className="font-bold text-white flex items-center gap-0.5">
                       Account &amp; Lists <ChevronDown className="w-3 h-3 text-emerald-300" />
@@ -315,8 +354,8 @@ export default function Navbar() {
                     onClick={() => setUserDropdownOpen(false)}
                   >
                     <div className="px-4 py-2 border-b border-gray-100">
-                      <p className="font-bold text-gray-900 truncate">{session.user.name}</p>
-                      <p className="text-[11px] text-gray-500 truncate">{session.user.email}</p>
+                      <p className="font-bold text-gray-900 truncate">{activeUser.name}</p>
+                      <p className="text-[11px] text-gray-500 truncate">{activeUser.email}</p>
                     </div>
 
                     <Link
@@ -336,7 +375,7 @@ export default function Navbar() {
                     </Link>
 
                     <button
-                      onClick={() => signOut()}
+                      onClick={handleSignOut}
                       className="w-full flex items-center gap-2 px-4 py-2 hover:bg-red-50 text-red-600 font-bold border-t border-gray-100 mt-1"
                     >
                       <LogOut className="w-3.5 h-3.5" />
