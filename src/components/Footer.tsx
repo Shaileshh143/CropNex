@@ -1,10 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Globe, Sprout, Heart } from 'lucide-react';
+import { Globe, Sprout, Heart, Mail } from 'lucide-react';
+import ContactSupportModal from '@/components/ContactSupportModal';
 
 export default function AgritechFooter() {
+  const [supportModalOpen, setSupportModalOpen] = useState(false);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -41,12 +44,14 @@ export default function AgritechFooter() {
               <li><a href="#" className="hover:text-white transition">APMC Mandi Updates</a></li>
               <li><a href="#" className="hover:text-white transition">Kisan Toll-Free: 1800-420-2026</a></li>
               <li>
-                <a
-                  href="mailto:cropnexhelp@gmail.com"
-                  className="hover:text-white text-emerald-100 font-semibold transition flex items-center gap-1"
+                <button
+                  type="button"
+                  onClick={() => setSupportModalOpen(true)}
+                  className="hover:text-white text-emerald-100 font-semibold transition flex items-center gap-1.5 text-left group"
                 >
-                  <span className="text-[#f59e0b]">Help:</span> cropnexhelp@gmail.com
-                </a>
+                  <span className="text-[#f59e0b]">Help:</span>
+                  <span className="underline decoration-dotted underline-offset-4 group-hover:text-white">cropnexhelp@gmail.com</span>
+                </button>
               </li>
             </ul>
           </div>
@@ -70,12 +75,13 @@ export default function AgritechFooter() {
               <li><Link href="/orders" className="hover:text-white transition">Download Tax Invoices</Link></li>
               <li><Link href="/orders" className="hover:text-white transition">Quality Assurance Policy</Link></li>
               <li>
-                <a
-                  href="mailto:cropnexhelp@gmail.com"
-                  className="hover:text-white text-[#f59e0b] font-semibold transition"
+                <button
+                  type="button"
+                  onClick={() => setSupportModalOpen(true)}
+                  className="hover:text-white text-[#f59e0b] font-semibold transition text-left underline decoration-dotted underline-offset-4"
                 >
                   24/7 Support: cropnexhelp@gmail.com
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -110,6 +116,12 @@ export default function AgritechFooter() {
         </div>
         <p>© 2026, CropNex.in, Inc. Direct Farm-to-Consumer &amp; Wholesale Marketplace.</p>
       </div>
+
+      {/* Interactive Support Modal */}
+      <ContactSupportModal
+        isOpen={supportModalOpen}
+        onClose={() => setSupportModalOpen(false)}
+      />
     </footer>
   );
 }

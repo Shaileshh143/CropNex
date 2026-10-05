@@ -8,6 +8,7 @@ import { useSupabaseAuth } from '@/context/SupabaseAuthContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { useCart } from '@/context/CartContext';
 import { useLocation } from '@/context/LocationContext';
+import ContactSupportModal from '@/components/ContactSupportModal';
 import {
   Search,
   ShoppingCart,
@@ -82,6 +83,7 @@ export default function Navbar() {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [avatarImgError, setAvatarImgError] = useState(false);
+  const [supportModalOpen, setSupportModalOpen] = useState(false);
 
   // Manual location state in modal
   const [tempCity, setTempCity] = useState(buyerLocation.city);
@@ -403,13 +405,17 @@ export default function Navbar() {
                       Seller Central
                     </Link>
 
-                    <a
-                      href="mailto:cropnexhelp@gmail.com"
-                      className="flex items-center gap-2 px-4 py-2.5 hover:bg-emerald-50 text-gray-800 transition"
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setUserDropdownOpen(false);
+                        setSupportModalOpen(true);
+                      }}
+                      className="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-emerald-50 text-gray-800 transition text-left"
                     >
                       <Mail className="w-3.5 h-3.5 text-emerald-600" />
-                      Help: cropnexhelp@gmail.com
-                    </a>
+                      <span>Help: cropnexhelp@gmail.com</span>
+                    </button>
 
                     <button
                       onClick={handleSignOut}
@@ -849,6 +855,12 @@ export default function Navbar() {
           <span>Cart</span>
         </button>
       </nav>
+
+      {/* Support Modal for Guaranteed Opening on All Devices */}
+      <ContactSupportModal
+        isOpen={supportModalOpen}
+        onClose={() => setSupportModalOpen(false)}
+      />
     </header>
   );
 }
