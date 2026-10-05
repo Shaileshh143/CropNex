@@ -397,14 +397,6 @@ export default function Navbar() {
                       Your Orders
                     </Link>
 
-                    <Link
-                      href="/seller"
-                      className="flex items-center gap-2 px-4 py-2.5 hover:bg-emerald-50 text-gray-800"
-                    >
-                      <Store className="w-3.5 h-3.5 text-emerald-600" />
-                      Seller Central
-                    </Link>
-
                     <button
                       type="button"
                       onClick={() => {

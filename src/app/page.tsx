@@ -248,7 +248,7 @@ function AgritechMarketplaceHomeContent() {
 
       {/* 1. BUYER LOCATION & TRANSIT NOTIFICATION BAR */}
       <div className="bg-[#eef5f0] border-b border-emerald-200/80 px-3 sm:px-6 py-2 text-xs overflow-hidden w-full max-w-full">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-1.5 sm:gap-2">
           <div className="flex items-center gap-1.5 text-emerald-950 flex-wrap">
             <Compass className="w-4 h-4 text-emerald-700 shrink-0" />
             <span className="leading-tight">
@@ -260,11 +260,6 @@ function AgritechMarketplaceHomeContent() {
             >
               • Change
             </button>
-          </div>
-
-          <div className="flex items-center gap-1.5 text-[11px] text-emerald-800 font-semibold truncate">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
-            <span className="truncate">Anti-Fraud Barcodes &amp; Verified Kisan IDs Active</span>
           </div>
         </div>
       </div>
