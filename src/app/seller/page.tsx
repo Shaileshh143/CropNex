@@ -120,7 +120,6 @@ export default function DedicatedFarmerPortalPage() {
   // Logistics Route Optimization State & Selected Hub
   const [logisticsOptimized, setLogisticsOptimized] = useState(true);
   const [selectedHub, setSelectedHub] = useState<string>('Pimpalgaon Baswant Farm-Gate Hub');
-  const [logisticsMapMode, setLogisticsMapMode] = useState<'interactive' | 'schematic'>('interactive');
 
   // ADD PRODUCE FORM STATE
   const [cropName, setCropName] = useState('');
@@ -1813,172 +1812,11 @@ export default function DedicatedFarmerPortalPage() {
               </div>
             </div>
 
-            {/* Map View Switcher: Interactive Map vs Schematic Vector */}
-            <div className="flex items-center justify-between gap-3 bg-gray-50 p-2 rounded-2xl border border-gray-200">
-              <div className="flex items-center gap-2">
-                <Navigation className="w-4 h-4 text-emerald-700" />
-                <span className="font-bold text-gray-900 text-xs">Agri-Transit Corridor Map Engine:</span>
-              </div>
-              <div className="flex items-center gap-1.5 bg-gray-200/70 p-1 rounded-xl">
-                <button
-                  onClick={() => setLogisticsMapMode('interactive')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1 ${
-                    logisticsMapMode === 'interactive'
-                      ? 'bg-emerald-800 text-white shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  <span>🗺️ Live GPS Interactive Map</span>
-                </button>
-                <button
-                  onClick={() => setLogisticsMapMode('schematic')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1 ${
-                    logisticsMapMode === 'schematic'
-                      ? 'bg-emerald-800 text-white shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  <span>📐 Schematic Flow</span>
-                </button>
-              </div>
-            </div>
-
-            {/* RENDER ACTIVE MAP ENGINE */}
-            {logisticsMapMode === 'interactive' ? (
-              <LiveTransitMap
-                isOptimized={logisticsOptimized}
-                onSelectHub={(hub) => setSelectedHub(hub)}
-              />
-            ) : (
-              /* SCHEMATIC HIGHWAY MAP CANVAS */
-              <div className="bg-[#0e2a1b] text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-emerald-800/60 space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    <Navigation className="w-5 h-5 text-[#f59e0b]" />
-                    <h3 className="font-black text-base text-white">Live Agri-Corridor Route Map (Nashik – Pune – Mumbai)</h3>
-                  </div>
-                  <div className="flex items-center gap-3 text-[11px] text-emerald-300">
-                    <span className="flex items-center gap-1">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-                      <span>Live GPS Pulse</span>
-                    </span>
-                    <span>Corridor: NH-60 &amp; NH-3 (Samruddhi Mahamarg)</span>
-                  </div>
-                </div>
-
-                {/* SVG Map Illustration */}
-                <div className="relative bg-[#071910] rounded-2xl p-4 border border-emerald-900/60 overflow-hidden">
-                <svg viewBox="0 0 900 340" className="w-full h-auto">
-                  <defs>
-                    <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#f59e0b" />
-                      <stop offset="50%" stopColor="#10b981" />
-                      <stop offset="100%" stopColor="#3b82f6" />
-                    </linearGradient>
-                    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                      <feGaussianBlur stdDeviation="3" result="glow" />
-                      <feComposite in="SourceGraphic" in2="glow" operator="over" />
-                    </filter>
-                  </defs>
-
-                  {/* Grid Lines */}
-                  <g stroke="#0f3d26" strokeWidth="0.5" strokeDasharray="3,3">
-                    <line x1="0" y1="80" x2="900" y2="80" />
-                    <line x1="0" y1="160" x2="900" y2="160" />
-                    <line x1="0" y1="240" x2="900" y2="240" />
-                    <line x1="200" y1="0" x2="200" y2="340" />
-                    <line x1="400" y1="0" x2="400" y2="340" />
-                    <line x1="600" y1="0" x2="600" y2="340" />
-                    <line x1="800" y1="0" x2="800" y2="340" />
-                  </g>
-
-                  {/* Highway Path */}
-                  <path
-                    d="M 120 70 Q 280 90 400 150 T 650 210 T 820 270"
-                    fill="none"
-                    stroke={logisticsOptimized ? 'url(#routeGrad)' : '#ef4444'}
-                    strokeWidth={logisticsOptimized ? '6' : '3'}
-                    strokeLinecap="round"
-                    filter="url(#glow)"
-                  />
-
-                  {/* Uncoordinated detour path (if not optimized) */}
-                  {!logisticsOptimized && (
-                    <path
-                      d="M 120 70 Q 180 200 400 150 T 520 70 T 820 270"
-                      fill="none"
-                      stroke="#f87171"
-                      strokeWidth="2"
-                      strokeDasharray="4,4"
-                    />
-                  )}
-
-                  {/* Moving Animated Vehicle on Route */}
-                  <circle cx="400" cy="150" r="7" fill="#f59e0b">
-                    <animate attributeName="r" values="6;10;6" dur="2s" repeatCount="indefinite" />
-                  </circle>
-
-                  {/* Hub 1: Pimpalgaon Baswant (Nashik) */}
-                  <g transform="translate(120, 70)" className="cursor-pointer" onClick={() => setSelectedHub('Pimpalgaon Baswant Farm-Gate Hub')}>
-                    <circle r="12" fill="#0e2a1b" stroke="#f59e0b" strokeWidth="3" />
-                    <circle r="5" fill="#f59e0b" />
-                    <text x="18" y="5" fill="#ffffff" fontSize="13" fontWeight="bold">1. Pimpalgaon Farm Hub (Nashik)</text>
-                    <text x="18" y="20" fill="#a7f3d0" fontSize="10">Origin • Tomato &amp; Vegetables (20.16° N)</text>
-                  </g>
-
-                  {/* Hub 2: Lasalgaon APMC */}
-                  <g transform="translate(250, 85)" className="cursor-pointer" onClick={() => setSelectedHub('Lasalgaon Mandi Consolidated Point')}>
-                    <circle r="10" fill="#0e2a1b" stroke="#10b981" strokeWidth="2.5" />
-                    <circle r="4" fill="#10b981" />
-                    <text x="-15" y="-15" fill="#ffffff" fontSize="12" fontWeight="bold">2. Lasalgaon Mandi</text>
-                    <text x="-15" y="-3" fill="#a7f3d0" fontSize="9">Asia's Onion Hub</text>
-                  </g>
-
-                  {/* Hub 3: Sangamner Mid-Corridor */}
-                  <g transform="translate(400, 150)" className="cursor-pointer" onClick={() => setSelectedHub('Sangamner Mid-Corridor Cross-Dock')}>
-                    <circle r="12" fill="#0e2a1b" stroke="#10b981" strokeWidth="3" />
-                    <circle r="5" fill="#10b981" />
-                    <text x="18" y="5" fill="#ffffff" fontSize="13" fontWeight="bold">3. Sangamner Cross-Dock Hub</text>
-                    <text x="18" y="20" fill="#a7f3d0" fontSize="10">Cold Storage &amp; EV Charging (NH-60)</text>
-                  </g>
-
-                  {/* Hub 4: Narayangaon Polyhouse */}
-                  <g transform="translate(620, 205)" className="cursor-pointer" onClick={() => setSelectedHub('Narayangaon Polyhouse Cluster Hub')}>
-                    <circle r="10" fill="#0e2a1b" stroke="#10b981" strokeWidth="2.5" />
-                    <circle r="4" fill="#10b981" />
-                    <text x="18" y="5" fill="#ffffff" fontSize="12" fontWeight="bold">4. Narayangaon Polyhouse Cluster</text>
-                    <text x="18" y="18" fill="#a7f3d0" fontSize="9">Pune Rural • Exotics &amp; Capsicum</text>
-                  </g>
-
-                  {/* Hub 5: Mumbai Vashi APMC Terminal */}
-                  <g transform="translate(820, 270)" className="cursor-pointer" onClick={() => setSelectedHub('Vashi APMC Urban Retail Terminal')}>
-                    <circle r="14" fill="#0e2a1b" stroke="#3b82f6" strokeWidth="4" />
-                    <circle r="6" fill="#3b82f6" />
-                    <text x="-160" y="-10" fill="#60a5fa" fontSize="13" fontWeight="black">5. Vashi Mumbai APMC Terminal</text>
-                    <text x="-160" y="5" fill="#bfdbfe" fontSize="10">Urban Consumer &amp; Retail Consignee Hub</text>
-                  </g>
-                </svg>
-              </div>
-
-              {/* Selected Hub Details Bar */}
-              <div className="p-4 bg-emerald-950/80 rounded-2xl border border-emerald-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-                <div>
-                  <span className="text-[10px] text-[#f59e0b] font-bold uppercase tracking-wider block">Selected Transit Node</span>
-                  <h4 className="font-bold text-white text-sm">{selectedHub}</h4>
-                  <p className="text-emerald-300 text-[11px]">Direct telemetry linked with carrier reefer units and live dispatch scales.</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="px-3 py-1 bg-emerald-800 text-white rounded-lg font-bold">Cold Lock: Active</span>
-                  <button
-                    onClick={() => showToast(`Logistics manifest downloaded for ${selectedHub}`)}
-                    className="px-3 py-1 bg-[#f59e0b] hover:bg-[#d97706] text-slate-900 rounded-lg font-bold transition"
-                  >
-                    View Manifest
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
+            {/* LIVE GPS TRANSIT MAP */}
+            <LiveTransitMap
+              isOptimized={logisticsOptimized}
+              onSelectHub={(hub) => setSelectedHub(hub)}
+            />
 
             {/* Hubs Listing */}
             <div className="bg-white rounded-3xl border border-gray-200 p-6 space-y-4">
