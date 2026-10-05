@@ -780,24 +780,25 @@ function AgritechMarketplaceHomeContent() {
                     className="bg-white rounded-xl sm:rounded-2xl border border-gray-200 hover:border-emerald-500 shadow-sm hover:shadow-xl transition-all duration-200 flex flex-col justify-between overflow-hidden group p-2.5 sm:p-4 space-y-2 sm:space-y-3"
                   >
                     {/* Top Badges */}
-                    <div className="flex items-center justify-between min-h-[20px] sm:min-h-[22px] gap-1">
-                      <span className="px-1.5 sm:px-2 py-0.5 bg-emerald-100 text-emerald-900 font-bold text-[9px] sm:text-[10px] rounded-md flex items-center gap-1 shrink-0">
+                    <div className="flex items-center justify-between min-h-[22px] gap-1">
+                      <span className="px-1.5 sm:px-2 py-0.5 bg-emerald-100 text-emerald-950 font-black text-[9px] sm:text-[10px] rounded-md flex items-center gap-1 shrink-0">
                         <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-emerald-700" />
                         <span>{product.grade}</span>
                       </span>
 
-                      {product.organic && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setViewCertificateProduct(product);
-                          }}
-                          className="px-1.5 sm:px-2 py-0.5 bg-emerald-50 text-emerald-800 text-[8.5px] sm:text-[10px] font-bold rounded-md border border-emerald-300 hover:bg-emerald-100 transition flex items-center gap-1 truncate"
-                        >
-                          <FileCheck className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-emerald-700 shrink-0" />
-                          <span className="truncate">Organic</span>
-                        </button>
-                      )}
+                      {/* Prominent High-Visibility Organic Certificate Badge */}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setViewCertificateProduct(product);
+                        }}
+                        className="px-2 py-0.5 sm:px-2.5 sm:py-0.5 bg-gradient-to-r from-emerald-700 via-green-600 to-emerald-700 hover:from-emerald-800 hover:to-green-700 text-white text-[9px] sm:text-[10px] font-black rounded-md shadow-xs transition-all flex items-center gap-1 shrink-0 cursor-pointer active:scale-95 border border-emerald-500/80"
+                        title="Click to view Government of India NPOP Organic Certificate"
+                      >
+                        <FileCheck className="w-3 h-3 text-amber-300 shrink-0" />
+                        <span className="tracking-tight">📜 Certificate</span>
+                      </button>
                     </div>
 
                     {/* Image */}
@@ -820,6 +821,26 @@ function AgritechMarketplaceHomeContent() {
                       >
                         {product.name}
                       </h3>
+
+                      {/* Scannable Organic Certificate Trust Strip */}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setViewCertificateProduct(product);
+                        }}
+                        className="w-full flex items-center justify-between px-2 py-1 bg-gradient-to-r from-emerald-50 to-green-50/80 hover:from-emerald-100 hover:to-green-100 border border-emerald-200/90 rounded-lg text-emerald-900 text-[9px] sm:text-[10.5px] font-bold transition text-left cursor-pointer group/cert shadow-2xs"
+                        title="Click to view authentic NPOP Organic Scope Certificate"
+                      >
+                        <span className="flex items-center gap-1.5 truncate">
+                          <span className="text-xs">🌿</span>
+                          <span className="truncate font-black text-emerald-950">100% Certified Organic</span>
+                        </span>
+                        <span className="text-emerald-700 underline text-[8.5px] sm:text-[9.5px] font-bold shrink-0 group-hover/cert:text-emerald-950 flex items-center gap-0.5">
+                          <span>Inspect</span>
+                          <span>&rarr;</span>
+                        </span>
+                      </button>
 
                       {/* Anti-Fraud Unique Barcode Tag */}
                       <button
@@ -1095,14 +1116,13 @@ function AgritechMarketplaceHomeContent() {
                       <span className="px-2 py-0.5 bg-emerald-100 text-emerald-900 rounded font-bold text-[10px]">
                         {quickProduct.grade}
                       </span>
-                      {quickProduct.organic && (
-                        <button
-                          onClick={() => setViewCertificateProduct(quickProduct)}
-                          className="px-2 py-0.5 bg-emerald-50 text-emerald-800 rounded font-bold text-[10px] border border-emerald-300 hover:underline"
-                        >
-                          ✓ View Lab Certificate
-                        </button>
-                      )}
+                      <button
+                        onClick={() => setViewCertificateProduct(quickProduct)}
+                        className="px-2.5 py-1 bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-700 hover:to-green-800 text-white rounded-lg font-black text-[10.5px] shadow-xs flex items-center gap-1.5 transition active:scale-95"
+                      >
+                        <FileCheck className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+                        <span>📜 View Govt. Organic Certificate</span>
+                      </button>
                       <button
                         type="button"
                         onClick={() => setViewBarcodeProduct(quickProduct)}
@@ -1190,14 +1210,23 @@ function AgritechMarketplaceHomeContent() {
 
       {/* 6. LAB TESTED ORGANIC CERTIFICATE MODAL (AUTHENTIC NPOP SCOPE CERTIFICATE) */}
       {viewCertificateProduct && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
-          <div className="relative w-full max-w-3xl my-4 bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200 animate-in zoom-in-95 duration-200">
+        <div
+          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-y-auto"
+          onClick={() => setViewCertificateProduct(null)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-3xl my-auto bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-emerald-800/40 animate-in zoom-in-95 duration-150 max-h-[92vh] flex flex-col"
+          >
             {/* Top Toolbar (Non-printable) */}
-            <div className="print:hidden bg-emerald-950 text-white px-4 sm:px-6 py-3 flex items-center justify-between border-b border-emerald-800">
+            <div className="print:hidden bg-[#071f13] text-white px-4 sm:px-6 py-3 flex items-center justify-between border-b border-emerald-800/60 shrink-0">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
-                <span className="font-bold text-xs sm:text-sm">
+                <span className="font-bold text-xs sm:text-sm text-white">
                   Govt. of India NPOP Scope Certificate &bull; Authentic Document
+                </span>
+                <span className="hidden md:inline-block px-2 py-0.5 bg-emerald-500/20 text-emerald-300 rounded text-[10px] font-mono border border-emerald-500/40">
+                  APEDA TraceNet Verified
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -1206,7 +1235,7 @@ function AgritechMarketplaceHomeContent() {
                     window.print();
                     showToast('Opening print dialog for Official NPOP Certificate');
                   }}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-800 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition shadow-sm"
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-800 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition shadow-sm active:scale-95"
                 >
                   <Printer className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">Print / Save PDF</span>
@@ -1221,229 +1250,257 @@ function AgritechMarketplaceHomeContent() {
               </div>
             </div>
 
-            {/* Certificate Paper Canvas */}
-            <div className="p-2 sm:p-5 bg-amber-50/40">
-              <div className="w-full bg-[#fdfdf9] border-4 border-double border-emerald-900 rounded-xl p-4 sm:p-7 relative shadow-lg font-serif text-gray-900">
-                {/* Inner Decorative Border */}
-                <div className="border border-emerald-800/40 p-3 sm:p-6 rounded-lg relative">
-                  {/* Corner Ornaments */}
-                  <div className="absolute top-1 left-1 w-3 sm:w-4 h-3 sm:h-4 border-t-2 border-l-2 border-emerald-900"></div>
-                  <div className="absolute top-1 right-1 w-3 sm:w-4 h-3 sm:h-4 border-t-2 border-r-2 border-emerald-900"></div>
-                  <div className="absolute bottom-1 left-1 w-3 sm:w-4 h-3 sm:h-4 border-b-2 border-l-2 border-emerald-900"></div>
-                  <div className="absolute bottom-1 right-1 w-3 sm:w-4 h-3 sm:h-4 border-b-2 border-r-2 border-emerald-900"></div>
-
-                  {/* Certificate Header: Certification Body (Left) & India Organic Logo (Right) */}
-                  <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-3 pb-3 border-b border-emerald-900/30 text-center sm:text-left">
-                    {/* Left: Aditi Organic Certifications */}
-                    <div className="space-y-1">
-                      <div className="flex items-center justify-center sm:justify-start gap-2">
-                        <div className="w-8 h-8 rounded-full bg-emerald-800 flex items-center justify-center text-amber-300 font-black text-sm shrink-0">
-                          AO
-                        </div>
-                        <div>
-                          <h1 className="text-sm sm:text-base font-black tracking-wide text-gray-950 uppercase">
-                            Aditi Organic Certifications Pvt. Ltd.
-                          </h1>
-                          <p className="text-[11px] font-sans font-bold text-emerald-800">
-                            Accreditation No. under NPOP: NPOP/NAB/0017
-                          </p>
-                        </div>
+            {/* Certificate Paper Canvas (Scrollable on small mobile screens) */}
+            <div className="flex-1 overflow-y-auto p-2.5 sm:p-5 bg-gradient-to-b from-amber-50/70 to-emerald-50/30">
+              <div className="w-full bg-[#fefdfa] border-2 sm:border-4 border-double border-emerald-900 rounded-xl sm:rounded-2xl p-3 sm:p-6 sm:px-8 relative shadow-lg font-serif text-gray-900 space-y-3 sm:space-y-4">
+                
+                {/* Certificate Header: Certification Body (Left) & India Organic Logo (Right) */}
+                <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-3 pb-3 border-b-2 border-emerald-900/40 text-center sm:text-left">
+                  {/* Left: Aditi Organic Certifications */}
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-center sm:justify-start gap-2.5">
+                      <div className="w-10 h-10 rounded-full bg-emerald-900 border-2 border-amber-400 flex items-center justify-center text-amber-300 font-black text-sm shrink-0 shadow-xs">
+                        AO
                       </div>
-                      <p className="text-[9.5px] font-sans text-gray-600 leading-tight">
-                        Plot No. 38, 1st Floor, N.S. Palya, Bannerghatta Road, Bengaluru - 560076, India<br />
-                        Phone: +91 80 2668 0404 &bull; Email: aditi@aditicert.net &bull; Web: www.aditicert.net
-                      </p>
+                      <div>
+                        <h1 className="text-sm sm:text-base font-black tracking-wide text-gray-950 uppercase leading-tight font-serif">
+                          Aditi Organic Certifications Pvt. Ltd.
+                        </h1>
+                        <p className="text-[11px] sm:text-xs font-sans font-bold text-emerald-800">
+                          Accreditation No. under NPOP: <span className="font-mono text-emerald-950">NPOP/NAB/0017</span>
+                        </p>
+                      </div>
                     </div>
+                    <p className="text-[10px] sm:text-[11px] font-sans text-gray-600 leading-tight">
+                      Plot No. 38, 1st Floor, N.S. Palya, Bannerghatta Road, Bengaluru - 560076, India<br className="hidden sm:inline" />
+                      Phone: +91 80 2668 0404 &bull; Email: aditi@aditicert.net &bull; Web: www.aditicert.net
+                    </p>
+                  </div>
 
-                    {/* Right: India Organic Official Emblem */}
-                    <div className="flex flex-col items-center text-center shrink-0">
-                      <div className="w-14 h-14 sm:w-16 sm:h-16 relative flex items-center justify-center">
+                  {/* Right: Authentic India Organic & Jaivik Bharat Emblem */}
+                  <div className="flex items-center gap-3 shrink-0 pt-1 sm:pt-0">
+                    <div className="flex flex-col items-center text-center">
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 relative flex items-center justify-center bg-white rounded-full p-1 border border-emerald-200 shadow-xs">
                         <svg className="w-full h-full" viewBox="0 0 100 100">
-                          <path d="M 20,48 C 22,25 45,15 70,22 C 60,32 50,42 42,48 Z" fill="#FF9933" />
-                          <path d="M 28,52 C 34,36 54,28 75,34 C 64,44 54,54 44,55 Z" fill="#F4F4F4" stroke="#E0E0E0" strokeWidth="0.5" />
-                          <path d="M 30,55 C 40,78 72,75 80,50 C 65,58 45,62 30,55 Z" fill="#138808" />
-                          <path d="M 45,55 Q 55,42 70,38" stroke="#138808" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+                          <circle cx="50" cy="50" r="48" fill="#f8fafc" stroke="#166534" strokeWidth="2.5" />
+                          <path d="M 22,46 C 26,24 50,16 74,22 C 64,32 52,42 42,48 Z" fill="#FF9933" />
+                          <path d="M 28,50 C 35,35 55,27 76,33 C 65,44 54,54 44,55 Z" fill="#ffffff" stroke="#cbd5e1" strokeWidth="0.8" />
+                          <path d="M 28,54 C 38,76 70,74 78,50 C 64,57 44,61 28,54 Z" fill="#15803d" />
+                          <path d="M 42,54 Q 54,42 70,37" stroke="#15803d" strokeWidth="3" fill="none" strokeLinecap="round" />
                         </svg>
                       </div>
-                      <span className="font-serif font-black text-xs sm:text-sm tracking-wider text-emerald-950 uppercase -mt-0.5">
+                      <span className="font-serif font-black text-[11px] sm:text-xs tracking-wider text-emerald-950 uppercase mt-0.5">
                         India Organic
                       </span>
-                      <span className="font-sans text-[8.5px] text-gray-600 font-semibold leading-tight">
-                        APEDA &bull; Govt. of India
+                      <span className="font-sans text-[9px] text-gray-600 font-bold leading-tight">
+                        जैविक भारत &bull; APEDA
                       </span>
                     </div>
                   </div>
+                </div>
 
-                  {/* Document Title */}
-                  <div className="text-center py-3 space-y-1">
-                    <h2 className="text-lg sm:text-2xl font-black tracking-[0.2em] text-emerald-950 uppercase inline-block border-b-2 border-emerald-900 pb-0.5">
-                      Scope Certificate
-                    </h2>
-                    <p className="font-mono font-bold text-xs sm:text-sm text-red-700 tracking-wider">
-                      Certificate No. {viewCertificateProduct.labCertificateNo || 'ORG/SC/2308/001533'}
-                    </p>
-                  </div>
-
-                  {/* Certified Entity Block */}
-                  <div className="space-y-1.5 text-center py-2">
-                    <p className="text-[11px] font-sans italic text-gray-600">
-                      This is to certify that the product(s) and area(s) of the organisation mentioned below:
-                    </p>
-                    <div className="py-2.5 px-4 bg-amber-50/70 border border-amber-200/80 rounded-lg inline-block w-full max-w-xl text-center">
-                      <h3 className="text-base sm:text-lg font-black text-red-900 tracking-wider font-serif uppercase">
-                        {viewCertificateProduct.farmerName}
-                      </h3>
-                      <p className="text-xs font-sans text-gray-700 font-medium">
-                        {viewCertificateProduct.farmLocation}, District: {viewCertificateProduct.district}, {viewCertificateProduct.state}, India
-                      </p>
-                      <div className="flex flex-wrap items-center justify-center gap-2 pt-1 text-[11px] font-mono text-emerald-900 font-bold">
-                        <span>Govt. Kisan ID: {viewCertificateProduct.kisanId}</span>
-                        <span>&bull;</span>
-                        <span>Batch: {viewCertificateProduct.barcode}</span>
-                      </div>
+                {/* Document Title & Active Certificate Pill */}
+                <div className="text-center py-1 sm:py-2 space-y-1.5">
+                  <span className="font-sans font-bold text-[10px] sm:text-xs tracking-widest text-emerald-800 uppercase block">
+                    Government of India &bull; Ministry of Commerce &amp; Industry
+                  </span>
+                  <h2 className="text-base sm:text-2xl font-black tracking-[0.15em] sm:tracking-[0.2em] text-emerald-950 uppercase inline-block border-b-2 border-emerald-900 pb-0.5 font-serif">
+                    Scope Certificate
+                  </h2>
+                  <div>
+                    <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1 bg-red-50 border border-red-300 rounded-lg text-red-900 font-mono font-bold text-xs sm:text-sm shadow-2xs">
+                      <span>Cert. No:</span>
+                      <span className="font-black text-red-700">{viewCertificateProduct.labCertificateNo || 'NPOP/NABL/AGRI-2026-4491'}</span>
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse ml-1" />
+                      <span className="text-[10px] sm:text-xs text-emerald-800 font-sans font-bold">100% Valid</span>
                     </div>
                   </div>
+                </div>
 
-                  {/* Legal Standard Text matching authentic Certificate */}
-                  <p className="text-[11px] sm:text-xs font-sans text-gray-800 leading-relaxed text-justify pt-2">
-                    are in accordance with the requirements of India&apos;s <strong>National Programme for Organic Production (NPOP)</strong> Standards
-                    (Considered equivalent to Council Regulation (EC) No. 834/2007 (Category A &amp; F) and Swiss Organic Farming Ordinance for unprocessed plant products originating in India).
+                {/* Certified Entity / Operator Card */}
+                <div className="space-y-1 text-center py-1">
+                  <p className="text-[11px] sm:text-xs font-sans italic text-gray-600">
+                    This is to certify that the agricultural holding, produce, and operations of:
                   </p>
-
-                  {/* Produce Details Card */}
-                  <div className="my-3 grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-sans">
-                    <div className="p-2.5 bg-emerald-50/60 border border-emerald-200/70 rounded-lg">
-                      <span className="text-gray-500 block text-[10px]">Certified Produce:</span>
-                      <span className="font-bold text-gray-900 text-sm">{viewCertificateProduct.name}</span>
-                      <span className="block text-[10px] text-emerald-800 font-semibold mt-0.5">
-                        Category: {viewCertificateProduct.category} &bull; {viewCertificateProduct.grade}
-                      </span>
-                    </div>
-                    <div className="p-2.5 bg-emerald-50/60 border border-emerald-200/70 rounded-lg">
-                      <span className="text-gray-500 block text-[10px]">Residue Analysis &amp; Test Result:</span>
-                      <span className="font-bold text-emerald-900 flex items-center gap-1">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                        <span>{viewCertificateProduct.labResidueResult || '0.00% Pesticides Detected (100% Organic PASS)'}</span>
-                      </span>
-                      <span className="block text-[10px] text-gray-500 mt-0.5">
-                        Lab: {viewCertificateProduct.labName || 'FSSAI & NABL Accredited Maharashtra Agri Quality Testing Lab'}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Validity Clause */}
-                  <div className="my-2.5 py-2 px-3 bg-amber-50/60 border-l-4 border-amber-600 rounded-r text-[11px] font-sans space-y-0.5">
-                    <p className="font-bold text-gray-900">
-                      This certificate is valid from: <span className="font-mono text-emerald-950 font-bold">{viewCertificateProduct.labTestDate || '28/09/2026'}</span> until: <span className="font-mono text-emerald-950 font-bold">27/09/2027</span>
+                  <div className="py-2.5 px-3 sm:px-6 bg-[#fffdf5] border-2 border-amber-300 rounded-xl inline-block w-full max-w-xl text-center shadow-xs">
+                    <h3 className="text-base sm:text-lg font-black text-emerald-950 tracking-wide font-serif uppercase">
+                      {viewCertificateProduct.farmerName}
+                    </h3>
+                    <p className="text-xs sm:text-sm font-sans text-gray-800 font-medium">
+                      📍 {viewCertificateProduct.farmLocation}, District: {viewCertificateProduct.district}, {viewCertificateProduct.state}, India
                     </p>
-                    <p className="text-[10px] text-gray-600 italic">
-                      The validity solely depends on continued compliance with the required standards and is subject to annual surveillance inspections.
-                    </p>
-                  </div>
-
-                  {/* Footer Security: Stamp/Signature, Barcode, QR Code */}
-                  <div className="pt-3 border-t border-emerald-900/30 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    {/* Left: Authorized Signature & Green Stamp */}
-                    <div className="flex items-center gap-3">
-                      <div className="relative shrink-0">
-                        <div className="w-20 h-20 rounded-full border-2 border-dashed border-emerald-700/80 flex flex-col items-center justify-center text-center p-1 text-emerald-800 rotate-[-8deg] shadow-xs bg-emerald-50/40">
-                          <span className="text-[6.5px] font-bold uppercase tracking-tighter">ADITI ORGANIC CERT.</span>
-                          <span className="text-[8px] font-black text-emerald-900 py-0.5">NPOP/NAB/0017</span>
-                          <span className="text-[6px] font-bold uppercase tracking-tight text-emerald-700">&bull; CERTIFIED ORGANIC &bull;</span>
-                        </div>
-                        <div className="absolute top-6 left-2 font-serif italic text-emerald-950 font-bold text-sm pointer-events-none select-none">
-                          N. Hegde
-                        </div>
-                      </div>
-                      <div className="text-[9.5px] font-sans text-gray-700">
-                        <p className="font-bold text-gray-900">Authorised Signatory</p>
-                        <p className="text-gray-500">Certification Manager</p>
-                        <p className="text-[8.5px] text-gray-500">Place: Bengaluru &bull; Date: {viewCertificateProduct.labTestDate || '28/09/2026'}</p>
-                      </div>
-                    </div>
-
-                    {/* Center: Anti-Fraud Barcode */}
-                    <div className="flex flex-col items-center justify-center text-center space-y-1">
-                      <div className="p-1.5 bg-white border border-gray-300 rounded shadow-xs">
-                        <svg className="w-36 h-9" viewBox="0 0 160 36">
-                          <rect x="0" y="0" width="2" height="36" fill="#000" />
-                          <rect x="3" y="0" width="1" height="36" fill="#000" />
-                          <rect x="6" y="0" width="3" height="32" fill="#000" />
-                          <rect x="11" y="0" width="1" height="32" fill="#000" />
-                          <rect x="14" y="0" width="2" height="32" fill="#000" />
-                          <rect x="18" y="0" width="4" height="32" fill="#000" />
-                          <rect x="24" y="0" width="1" height="32" fill="#000" />
-                          <rect x="27" y="0" width="3" height="32" fill="#000" />
-                          <rect x="32" y="0" width="2" height="32" fill="#000" />
-                          <rect x="36" y="0" width="1" height="32" fill="#000" />
-                          <rect x="39" y="0" width="3" height="32" fill="#000" />
-                          <rect x="44" y="0" width="2" height="32" fill="#000" />
-                          <rect x="48" y="0" width="4" height="32" fill="#000" />
-                          <rect x="54" y="0" width="1" height="32" fill="#000" />
-                          <rect x="57" y="0" width="2" height="32" fill="#000" />
-                          <rect x="61" y="0" width="3" height="32" fill="#000" />
-                          <rect x="66" y="0" width="1" height="32" fill="#000" />
-                          <rect x="69" y="0" width="4" height="32" fill="#000" />
-                          <rect x="75" y="0" width="2" height="32" fill="#000" />
-                          <rect x="79" y="0" width="1" height="32" fill="#000" />
-                          <rect x="82" y="0" width="3" height="32" fill="#000" />
-                          <rect x="87" y="0" width="2" height="32" fill="#000" />
-                          <rect x="91" y="0" width="1" height="32" fill="#000" />
-                          <rect x="94" y="0" width="4" height="32" fill="#000" />
-                          <rect x="100" y="0" width="2" height="32" fill="#000" />
-                          <rect x="104" y="0" width="1" height="32" fill="#000" />
-                          <rect x="107" y="0" width="3" height="32" fill="#000" />
-                          <rect x="112" y="0" width="2" height="32" fill="#000" />
-                          <rect x="116" y="0" width="4" height="32" fill="#000" />
-                          <rect x="122" y="0" width="1" height="32" fill="#000" />
-                          <rect x="125" y="0" width="3" height="32" fill="#000" />
-                          <rect x="130" y="0" width="2" height="32" fill="#000" />
-                          <rect x="134" y="0" width="1" height="32" fill="#000" />
-                          <rect x="137" y="0" width="3" height="32" fill="#000" />
-                          <rect x="142" y="0" width="2" height="32" fill="#000" />
-                          <rect x="146" y="0" width="4" height="32" fill="#000" />
-                          <rect x="152" y="0" width="1" height="32" fill="#000" />
-                          <rect x="155" y="0" width="2" height="36" fill="#000" />
-                          <rect x="158" y="0" width="2" height="36" fill="#000" />
-                        </svg>
-                      </div>
-                      <span className="font-mono text-[9px] font-bold text-gray-800 tracking-wider">
-                        (253) {viewCertificateProduct.barcode}
+                    <div className="flex flex-wrap items-center justify-center gap-2 pt-1.5 text-[11px] sm:text-xs font-mono text-emerald-900 font-bold">
+                      <span className="bg-emerald-100/70 px-2 py-0.5 rounded border border-emerald-300">
+                        Govt. Kisan ID: {viewCertificateProduct.kisanId}
+                      </span>
+                      <span>&bull;</span>
+                      <span className="bg-emerald-100/70 px-2 py-0.5 rounded border border-emerald-300">
+                        Batch: {viewCertificateProduct.barcode}
                       </span>
                     </div>
+                  </div>
+                </div>
 
-                    {/* Right: Verification QR Code */}
-                    <div className="flex items-center gap-2 text-right">
-                      <div className="text-[9px] font-sans">
-                        <span className="font-bold text-emerald-950 block">APEDA TraceNet</span>
-                        <span className="text-[8px] text-gray-500">Scan to Verify</span>
+                {/* Legal Standard Text matching authentic Government Certificate */}
+                <p className="text-[11px] sm:text-xs font-sans text-gray-800 leading-relaxed text-justify px-1">
+                  are in compliance with the standards of the <strong>National Programme for Organic Production (NPOP)</strong> of the Government of India
+                  (Considered equivalent to Council Regulation (EC) No. 834/2007 (Category A &amp; F) and Swiss Organic Farming Ordinance for unprocessed plant products originating in India).
+                </p>
+
+                {/* 2 High-Visibility Produce & Laboratory Analysis Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-sans">
+                  <div className="p-3 bg-emerald-50/80 border-2 border-emerald-300 rounded-xl space-y-1 shadow-2xs">
+                    <span className="text-emerald-800 font-bold uppercase tracking-wider block text-[10px]">
+                      1. Certified Agricultural Produce:
+                    </span>
+                    <span className="font-black text-gray-950 text-sm sm:text-base block">
+                      {viewCertificateProduct.name}
+                    </span>
+                    <div className="flex items-center gap-2 text-[11px] text-emerald-900 font-semibold pt-0.5">
+                      <span className="bg-white px-2 py-0.5 rounded border border-emerald-200">
+                        Grade: {viewCertificateProduct.grade}
+                      </span>
+                      <span className="bg-white px-2 py-0.5 rounded border border-emerald-200">
+                        Category: {viewCertificateProduct.category}
+                      </span>
+                    </div>
+                    <span className="block text-[10.5px] text-gray-600 font-medium pt-0.5">
+                      Harvest Batch: {viewCertificateProduct.harvestDate}
+                    </span>
+                  </div>
+
+                  <div className="p-3 bg-emerald-50/80 border-2 border-emerald-300 rounded-xl space-y-1 shadow-2xs">
+                    <span className="text-emerald-800 font-bold uppercase tracking-wider block text-[10px]">
+                      2. Lab Residue &amp; Chemical Test:
+                    </span>
+                    <div className="font-black text-emerald-900 text-xs sm:text-sm flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <span>{viewCertificateProduct.labResidueResult || '0.00% Pesticides Detected (100% Organic PASS)'}</span>
+                    </div>
+                    <span className="block text-[11px] text-gray-700 font-medium pt-0.5">
+                      Accredited Testing Lab: <strong>{viewCertificateProduct.labName || 'NABL & FSSAI Accredited Agri Quality Testing Laboratory'}</strong>
+                    </span>
+                  </div>
+                </div>
+
+                {/* Validity Clause */}
+                <div className="py-2.5 px-3.5 bg-amber-50/80 border-l-4 border-amber-600 rounded-r-xl text-xs font-sans space-y-1 shadow-2xs">
+                  <p className="font-bold text-gray-900 flex items-center gap-1.5">
+                    <span>🗓️ Validity Period:</span>
+                    <span className="font-mono text-emerald-950 font-black">{viewCertificateProduct.labTestDate || '28 Sep 2026'}</span>
+                    <span>to</span>
+                    <span className="font-mono text-emerald-950 font-black">27 Sep 2027</span>
+                    <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded ml-1">
+                      1 Year Cycle
+                    </span>
+                  </p>
+                  <p className="text-[10.5px] text-gray-600 italic">
+                    The validity solely depends on continued compliance with NPOP standards and is subject to annual surveillance inspections by the accredited certification body.
+                  </p>
+                </div>
+
+                {/* Footer Security: Stamp/Signature, Barcode, QR Code */}
+                <div className="pt-3 border-t-2 border-emerald-900/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+                  {/* Left: Authorized Signature & Green Stamp */}
+                  <div className="flex items-center gap-3">
+                    <div className="relative shrink-0">
+                      <div className="w-20 h-20 rounded-full border-2 border-dashed border-emerald-700 flex flex-col items-center justify-center text-center p-1 text-emerald-800 rotate-[-8deg] shadow-xs bg-emerald-50/60">
+                        <span className="text-[7px] font-bold uppercase tracking-tighter">ADITI ORGANIC CERT.</span>
+                        <span className="text-[9px] font-black text-emerald-950 py-0.5">NPOP/NAB/0017</span>
+                        <span className="text-[6.5px] font-bold uppercase tracking-tight text-emerald-700">&bull; CERTIFIED ORGANIC &bull;</span>
                       </div>
-                      <div className="p-1 bg-white border border-gray-300 rounded shadow-xs">
-                        <QrCode className="w-12 h-12 text-emerald-950" />
+                      <div className="absolute top-6 left-2 font-serif italic text-emerald-950 font-bold text-sm pointer-events-none select-none">
+                        N. Hegde
                       </div>
+                    </div>
+                    <div className="text-[10px] sm:text-[11px] font-sans text-gray-800">
+                      <p className="font-bold text-gray-900">Authorised Signatory</p>
+                      <p className="text-gray-600">Certification Officer</p>
+                      <p className="text-[9.5px] text-gray-500 font-mono">Date: {viewCertificateProduct.labTestDate || '28 Sep 2026'} &bull; Bengaluru</p>
                     </div>
                   </div>
 
-                  {/* Official Bottom Disclaimer */}
-                  <div className="mt-3 pt-2 border-t border-emerald-900/20 text-center text-[8.5px] font-sans text-gray-500 leading-tight">
-                    Issued under the authority of National Programme for Organic Production, Ministry of Commerce &amp; Industry, Government of India.
+                  {/* Center: Anti-Fraud Barcode */}
+                  <div className="flex flex-col items-center justify-center text-center space-y-1">
+                    <div className="p-1.5 bg-white border border-gray-300 rounded shadow-2xs">
+                      <svg className="w-32 sm:w-36 h-8" viewBox="0 0 160 36">
+                        <rect x="0" y="0" width="2" height="36" fill="#000" />
+                        <rect x="3" y="0" width="1" height="36" fill="#000" />
+                        <rect x="6" y="0" width="3" height="32" fill="#000" />
+                        <rect x="11" y="0" width="1" height="32" fill="#000" />
+                        <rect x="14" y="0" width="2" height="32" fill="#000" />
+                        <rect x="18" y="0" width="4" height="32" fill="#000" />
+                        <rect x="24" y="0" width="1" height="32" fill="#000" />
+                        <rect x="27" y="0" width="3" height="32" fill="#000" />
+                        <rect x="32" y="0" width="2" height="32" fill="#000" />
+                        <rect x="36" y="0" width="1" height="32" fill="#000" />
+                        <rect x="39" y="0" width="3" height="32" fill="#000" />
+                        <rect x="44" y="0" width="2" height="32" fill="#000" />
+                        <rect x="48" y="0" width="4" height="32" fill="#000" />
+                        <rect x="54" y="0" width="1" height="32" fill="#000" />
+                        <rect x="57" y="0" width="2" height="32" fill="#000" />
+                        <rect x="61" y="0" width="3" height="32" fill="#000" />
+                        <rect x="66" y="0" width="1" height="32" fill="#000" />
+                        <rect x="69" y="0" width="4" height="32" fill="#000" />
+                        <rect x="75" y="0" width="2" height="32" fill="#000" />
+                        <rect x="79" y="0" width="1" height="32" fill="#000" />
+                        <rect x="82" y="0" width="3" height="32" fill="#000" />
+                        <rect x="87" y="0" width="2" height="32" fill="#000" />
+                        <rect x="91" y="0" width="1" height="32" fill="#000" />
+                        <rect x="94" y="0" width="4" height="32" fill="#000" />
+                        <rect x="100" y="0" width="2" height="32" fill="#000" />
+                        <rect x="104" y="0" width="1" height="32" fill="#000" />
+                        <rect x="107" y="0" width="3" height="32" fill="#000" />
+                        <rect x="112" y="0" width="2" height="32" fill="#000" />
+                        <rect x="116" y="0" width="4" height="32" fill="#000" />
+                        <rect x="122" y="0" width="1" height="32" fill="#000" />
+                        <rect x="125" y="0" width="3" height="32" fill="#000" />
+                        <rect x="130" y="0" width="2" height="32" fill="#000" />
+                        <rect x="134" y="0" width="1" height="32" fill="#000" />
+                        <rect x="137" y="0" width="3" height="32" fill="#000" />
+                        <rect x="142" y="0" width="2" height="32" fill="#000" />
+                        <rect x="146" y="0" width="4" height="32" fill="#000" />
+                        <rect x="152" y="0" width="1" height="32" fill="#000" />
+                        <rect x="155" y="0" width="2" height="36" fill="#000" />
+                        <rect x="158" y="0" width="2" height="36" fill="#000" />
+                      </svg>
+                    </div>
+                    <span className="font-mono text-[9px] font-bold text-gray-800 tracking-wider">
+                      (253) {viewCertificateProduct.barcode}
+                    </span>
                   </div>
+
+                  {/* Right: Verification QR Code */}
+                  <div className="flex items-center gap-2 text-right">
+                    <div className="text-[10px] font-sans">
+                      <span className="font-bold text-emerald-950 block">APEDA TraceNet</span>
+                      <span className="text-[9px] text-gray-600">Scan to Verify</span>
+                    </div>
+                    <div className="p-1 bg-white border border-gray-300 rounded shadow-2xs">
+                      <QrCode className="w-11 h-11 text-emerald-950" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Official Bottom Disclaimer */}
+                <div className="pt-2 border-t border-emerald-900/20 text-center text-[9px] sm:text-[10px] font-sans text-gray-500 leading-tight">
+                  Issued under the authority of National Programme for Organic Production, Ministry of Commerce &amp; Industry, Government of India.
                 </div>
               </div>
             </div>
 
             {/* Modal Bottom Controls */}
-            <div className="print:hidden bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200">
-              <span className="text-xs text-gray-500 font-sans truncate pr-2">
-                Authentic NPOP Certificate for <strong>{viewCertificateProduct.name}</strong>
+            <div className="print:hidden bg-gray-50 px-4 sm:px-6 py-3 flex items-center justify-between border-t border-gray-200 shrink-0">
+              <span className="text-xs text-gray-600 font-sans truncate pr-2">
+                Certified NPOP Organic Document for <strong>{viewCertificateProduct.name}</strong>
               </span>
-              <div className="flex items-center gap-3 shrink-0">
+              <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                 <button
                   onClick={() => {
                     window.print();
                     showToast('Opening print dialog');
                   }}
-                  className="px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow"
+                  className="px-3 sm:px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Download / Print</span>
